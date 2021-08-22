@@ -1,13 +1,15 @@
 Partes que faltan:
-Metodos
+Metodos Jesus
 -> Agregar editorial
 -> Buscar editorial
 -> boolean editorial vacia
 -> Visualiar editoriales
+Metodos Nelson
 -> visualizar libros de cada editorial
 -> Eiminar editorial
 -> Agregar libro
 -> Buscar libro
+Metodos Yan
 -> Eliminar Libro
 -> Ver detalles del libro
 -> Actualizar inventario

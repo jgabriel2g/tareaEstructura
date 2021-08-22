@@ -1,3 +1,11 @@
 <?php 
-echo "kabkusydkdcbk"
+echo "kabkusydkdcbk";
+echo "yan";
+echo "yan";
+echo "yan";
+echo "yan";
+echo "yan";
+echo "yan";
+echo "yan";
+echo "yan";
 ?>

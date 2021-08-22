@@ -3,8 +3,9 @@ Metodos
 -> Agregar editorial
 -> Buscar editorial
 -> boolean editorial vacia
+-> Visualiar editoriales
+-> visualizar libros de cada editorial
 -> Eiminar editorial
--> Apuntar nodo final libro
 -> Agregar libro
 -> Buscar libro
 -> Eliminar Libro

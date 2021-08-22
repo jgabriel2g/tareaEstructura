@@ -1,0 +1,16 @@
+Partes que faltan:
+Metodos
+-> Agregar editorial
+-> Buscar editorial
+-> boolean editorial vacia
+-> Eiminar editorial
+-> Apuntar nodo final libro
+-> Agregar libro
+-> Buscar libro
+-> Eliminar Libro
+-> Ver detalles del libro
+-> Actualizar inventario
+
+
+-> Desarrollar un método que me diga cuantos libros están en la biblioteca de un año especifico
+-> Desarrollar un método que me diga cuantos libros están en la biblioteca de una editorial especifica

@@ -45,7 +45,7 @@
         $this->anterior = $Anterior;
     }
     // abajo
-    function get_Abajo){
+    function get_Abajo(){
         return $this->abajo;
     }
     function set_Abajo($abajo){

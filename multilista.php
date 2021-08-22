@@ -12,15 +12,28 @@
 		}
 
 		function AgregarEditorial(){
-
+            echo "Hello"
+            echo "Hello"
+            echo "Hello"
+            echo "Hello"
+            echo "Hello"
+            echo "Hello"
+            echo "Hello"
+            echo "Hello"
 		}
 
 		function BuscarEditorial(){
-			
+			echo "Hello"
+            echo "Hello"
+            echo "Hello"
+            echo "Hello"
+            echo "Hello"
+            echo "Hello"
+            echo "Hello"
+            echo "Hello"
 		}
 
 		function EditorialVacia(){
-			
 		}
 
 		function visualizarEditoriales(){

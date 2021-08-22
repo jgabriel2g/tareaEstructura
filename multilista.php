@@ -16,17 +16,15 @@
 		}
 
 		function BuscarEditorial(){
-			
+
 		}
 
 		function EditorialVacia(){
-			echo "Hola";
-			echo "Hola";
+
 		}
 
 		function visualizarEditoriales(){
-			echo "Hola";
-			echo "Hola";
+
 		}
 
 		function VisualizarLibrosEditorial(){

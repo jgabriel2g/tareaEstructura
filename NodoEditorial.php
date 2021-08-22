@@ -2,13 +2,15 @@
     private $idEditorial;
     private $denominacion;
     private $anterior;
-    private $siguiente
+    private $siguiente;
+    private $abajo;
     //Contructor de la clase Editorial
     function __construct($idEditorial, $denominacion){
         $this->idEditorial = $idEditorial;
         $this->denominacion = $denominacion;
         $this->anterior = null;
         $this->siguiente = null;
+        $this->abajo = null;
     }
     //Constructor Vacio para inicilizar la clase
     function __construct(){
@@ -42,7 +44,12 @@
     function set_Anterior($Anterior){
         $this->anterior = $Anterior;
     }
-    
-    
-    
+    // abajo
+    function get_Abajo){
+        return $this->abajo;
+    }
+    function set_Abajo($abajo){
+        $this->abajo = $abajo;
+    }
+        
 ?>

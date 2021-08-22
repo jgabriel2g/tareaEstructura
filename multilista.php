@@ -26,7 +26,7 @@
 			while($P != null && $Encontrado == false){
 				if($P == null){
 					return "Lista principal Vacia";
-				}else if($P->get_Editorial() == $nodoEditorialP){
+				}else if($P->get_Editorial() == $nodoEditorialP->get_Editorial()){
 					//recorrer la editorial hacia abajo para saber si tiene o no libros
 					if($P->get_Abajo() == null){
 						return true;

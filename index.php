@@ -27,6 +27,7 @@
     <div class="header">
         <h1>Biblioteca de Multilistas</h1>
     </div>
+    <hr>
     <section class="Formulario de Editorial">
         <div class="agregare_ditorial">
             <form action="index.php" method="post">
@@ -64,13 +65,73 @@
                 }
             ?>
         </div>
-
+        <div class="verificar_vacio">
+            <form action="index.php" method="post">
+                <span>Verificar Si la editorial Esta Vacia</span>
+                <input type="text" name="ver_vacio" class="texto">
+                <input type="submit" value="Ver si esta vacio" class="boton">
+            </form>
+        </div>
+        <div class="Editoral_Vacia">
+            <?php
+                if(isset($_POST["ver_vacio"])){
+                    $S = $_SESSION["multilista"]->EditorialVacia($_POST["ver_vaicio"]);
+                    if ($S) {
+                        echo "Esta Editorial esta vacia";
+                    }else{
+                        echo "Editorial con al menos 1 libro";
+                    }
+                }
+            ?>
+        </div>
     </section>
+    <hr>
+    <!-- NO FUNCIONA EL AGREGAR Y MOSTRAR LIRBO -->
+    <section class="Formulario de libros">
+        <h4>Agergar Libro</h4>
+        <div class="registrar_libr">
+            <hr>
+            <form action="index.php" method="post">
+                <span>Id Libro</span>
+                <input type="text" name="add_id_lib" class="texto">
+                <span>Nombre Libro</span>
+                <input type="text" name="add_titulo" class="texto">
+                <span>Nombre Autor</span>
+                <input type="text" name="add_autor" class="texto">
+                <span>Pais</span>
+                <input type="text" name="add_pais" class="texto">
+                <span>Año</span>
+                <input type="text" name="add_ano" class="texto">
+                <span>Cantidad</span>
+                <input type="text" name="add_cantidad" class="texto">
+                <span>A que liberia lo desea Agregar</span>
+                <input type="text" name="Select_edit" class="texto">
+                <input type="submit" value="Agregar Libro" class="boton">
+            </form>
 
+        </div>
+        <div class="agergar_libro">
+            <?php
+                if (isset($_POST["add_id_lib"])) {
+                    $NL = new NodoLibro($_POST["add_id_lib"],$_POST["add_titulo"],$_POST["add_autor"],$_POST["add_pais"],$_POST["add_ano"],$_POST["add_cantidad"]);
+                    $_SESSION["multilista"]->AgregarLibro($NL,$_POST["Select_edit"]);
+                }
+            ?>
+        </div>
+    </section>
+    <hr>
     <section class="Editoriales">
         <div class="mostrar_Editorial">
             <?php
                 $Mensaje = $_SESSION["multilista"]->mostrarEditorial();
+                echo "$Mensaje";
+            ?>
+        </div>
+    </section>
+    <section class="Libros">
+        <div class="mostrarLibros">
+            <?php
+                $Mensaje = $_SESSION["multilista"]->VisualizarLibrosEditorial();
                 echo "$Mensaje";
             ?>
         </div>

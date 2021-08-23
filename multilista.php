@@ -15,7 +15,7 @@
 			$this->LibroFinal = null;
 		}
 
-		function AgregarEditorial($nodoEditorialNew){
+		function AgregarEditorial($nodoEditorialNew){ //✔
 			if ($this->Head == null){
                 $this->Head = $nodoEditorialNew;
             }else{
@@ -25,21 +25,21 @@
             $this->Final = $nodoEditorialNew;
 		}
 		
-		function mostrarEditorial(){
+		function mostrarEditorial(){ //✔
 			$Corredor = $this->Head;
 			$Mensaje = "";
 			if ($this->Head == null) {
 				return null;
 			}else{
 				while ($Corredor !=null) {
-					$Mensaje = $Mensaje."Id : ".$Corredor->get_idEditorial()." Nombre : ".$Corredor->get_denominacion()."<br>";
+					$Mensaje = $Mensaje."*Id : ".$Corredor->get_idEditorial()." Nombre : ".$Corredor->get_denominacion()."<br>";
 					$Corredor = $Corredor->get_Siguiente();
 				}
 			}
 			return "La lista es: <br> $Mensaje";
 		}
 
-		function BuscarEditorial($idEditorial){
+		function BuscarEditorial($idEditorial){ //✔
 			$P = $this->Head;
             $Encontrado = False;
             while ($P != null && $Encontrado == False){
@@ -54,16 +54,16 @@
 
 		function EditorialVacia($P){
 			//recorrer la editorial hacia abajo para saber si tiene o no libros
-			if($P->Abajo == null){
-				return true;
-			}else{
-				return false;
+			$Q = $this->Abajo;
+			if($Q->get_denominacion() == $P){
+				if($Q->get_abajo_primerLib() == null){
+					return true;
+				}else{
+					return false;
+				}
 			}
 		}
 		
-		
-
-
 		function ApuntarFinalLibro(){
 			$R = $this->Abajo;
 			while ($R != null) {
@@ -72,9 +72,6 @@
 			return $this->LibroFinal;
 		}
 
-		function VisualizarLibrosEditorial(){
-			
-		}
 
 		function EliminarEditorial($eliminacion){
 			$Aux = $this->Head;
@@ -109,13 +106,31 @@
 		}
 
 		function AgregarLibro($Libro,$editorial){
-			if (EditorialVacia($editorial)) {
-				$this->Abajo = $Libro;
-			}else{
-				ApuntarFinalLibro();
-				$this->LibroFinal->set_abajo($Libro);
+			$editoral_add = $this->BuscarEditorial($editorial);
+			if ($editoral_add == $editorial){
+				if ($this->EditorialVacia($editoral_add)) {
+					$this->Abajo = $Libro;
+					$this->Abajo->set_abajo_primerlib($Libro);
+				}else {
+					$this->ApuntarFinalLibro();
+					$this->LibroFinal->set_abajo($Libro);
+				}
+				$this->LibroFinal = $libro;
 			}
-			$this->LibroFinal = $Libro;
+		}
+
+		function VisualizarLibrosEditorial(){
+			$Corredor = $this->Abajo;
+			$Mensaje = "";
+			if ($this->Abajo = null) {
+				return null;
+			}else{
+				while ($Corredor !=null) {
+					$Mensaje = $Mensaje."--- id: ".$Corredor->get_idLibro()." nombre: ".$Corredor->get_titulo()." Autor: ".$Corredor->get_autor()."<br>";
+					$Corredor = $Corredor->get_abajo();
+				}
+				return $Mensaje;
+			}
 		}
 
 		function BuscarLibro($idLibro,$idEd){

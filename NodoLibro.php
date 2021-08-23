@@ -16,7 +16,6 @@ class NodoLibro{
         $this->pais = $pais;
         $this->ano = $ano;
         $this->cantidad = $cantidad;
-        $this->abajo = null;
     }
 
     //id_Libro

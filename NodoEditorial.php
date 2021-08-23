@@ -10,16 +10,13 @@ class NodoEditorial{
     function __construct($idEditorial, $denominacion){
         $this->idEditorial = $idEditorial;
         $this->denominacion = $denominacion;
-        $this->anterior = null;
-        $this->siguiente = null;
-        $this->abajo_primerLib = null;
     }
     
     //IdEditorial
-    function get_Editorial(){
+    function get_idEditorial(){
         return $this->idEditorial;
     }
-    function set_Editorial($editorial){
+    function set_idEditorial($editorial){
         $this->idEditorial = $editorial;
     }
     //Denominacion

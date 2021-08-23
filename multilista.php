@@ -1,7 +1,7 @@
 <?php
 	include("NodoEditorial.php");
 	include("NodoLibro.php");
-	class MultiListas{
+	class multilista{
 
 		private $Head;
 		private $Final;
@@ -22,14 +22,28 @@
                 $this->Final->set_Siguiente($nodoEditorialNew);
                 $nodoEditorialNew->set_Anterior($this->Final);
             }
-            $this->final = $nodoEditorialNew;
+            $this->Final = $nodoEditorialNew;
+		}
+		
+		function mostrarEditorial(){
+			$Corredor = $this->Head;
+			$Mensaje = "";
+			if ($this->Head == null) {
+				return null;
+			}else{
+				while ($Corredor !=null) {
+					$Mensaje = $Mensaje."Id : ".$Corredor->get_idEditorial()." Nombre : ".$Corredor->get_denominacion()."<br>";
+					$Corredor = $Corredor->get_Siguiente();
+				}
+			}
+			return "La lista es: <br> $Mensaje";
 		}
 
 		function BuscarEditorial($idEditorial){
 			$P = $this->Head;
             $Encontrado = False;
             while ($P != null && $Encontrado == False){
-                if ($P-> get_Editorial() == $idEditorial){
+                if ($P->get_denominacion() == $idEditorial){
                     $Encontrado = true;
                 }else{
                     $P = $P->get_Siguiente();
@@ -37,17 +51,18 @@
             }
         	return $P;
         }
-		}
 
-		function EditorialVacia(){
+		function EditorialVacia($P){
 			//recorrer la editorial hacia abajo para saber si tiene o no libros
-			$Q = $this->Abajo;
-			if($Q == null){
+			if($P->Abajo == null){
 				return true;
 			}else{
 				return false;
 			}
 		}
+		
+		
+
 
 		function ApuntarFinalLibro(){
 			$R = $this->Abajo;
@@ -93,14 +108,14 @@
         }
 		}
 
-		function AgregarLibro($Q){
-			if (EditorialVacia()) {
-				$this->Abajo = $Q;
+		function AgregarLibro($Libro,$editorial){
+			if (EditorialVacia($editorial)) {
+				$this->Abajo = $Libro;
 			}else{
 				ApuntarFinalLibro();
-				$this->LibroFinal->set_abajo($Q);
+				$this->LibroFinal->set_abajo($Libro);
 			}
-			$this->LibroFinal = $Q;
+			$this->LibroFinal = $Libro;
 		}
 
 		function BuscarLibro($idLibro,$idEd){
@@ -160,31 +175,31 @@
 			
 		}
 
-		function verDetallesLibro($IdEd,$IdLi){
-			$Mensaje = "";
-			$NL = BuscarLibro($IdEd,$IdLi);
-			if ($NL == null) {
-				$Mensaje = "Libro no encontrado";
-			} else {
-				$Mensaje = "ID libro: ".$NL->get_idLibro()."<br>"."Titulo: ".$NL->get_titulo()."<br>"."Autor: ".
-				$NL->get_autor()."<br>"."Pais: ".$NL->get_pais()."<br>"."Año: ".$NL->get_ano()."<br>"."Cantidad: ".$NL->get_cantidad();
-			}
-			return $Mensaje;
+		// function verDetallesLibro($IdEd,$IdLi){
+		// 	$Mensaje = "";
+		// 	$NL = BuscarLibro($IdEd,$IdLi);
+		// 	if ($NL == null) {
+		// 		$Mensaje = "Libro no encontrado";
+		// 	} else {
+		// 		$Mensaje = "ID libro: ".$NL->get_idLibro()."<br>"."Titulo: ".$NL->get_titulo()."<br>"."Autor: ".
+		// 		$NL->get_autor()."<br>"."Pais: ".$NL->get_pais()."<br>"."Año: ".$NL->get_ano()."<br>"."Cantidad: ".$NL->get_cantidad();
+		// 	}
+		// 	return $Mensaje;
 			
-		}
+		// }
 
-		function ActualizarInventario($IdEd,$IdLi,$CA){
-			$P = False;
-			$NL = BuscarLibro($IdEd,$IdLi);
-			if ($NL==null) {
-				$P = False;
-			} else {
-				$NL->get_cantidad() = $NL->get_cantidad() + $CA;
-				$P = true; 
-			}
-			return $P;
+		// function ActualizarInventario($IdEd,$IdLi,$CA){
+		// 	$P = False;
+		// 	$NL = BuscarLibro($IdEd,$IdLi);
+		// 	if ($NL==null) {
+		// 		$P = False;
+		// 	} else {
+		// 		$NL->get_cantidad() = $NL->get_cantidad() + $CA;
+		// 		$P = true; 
+		// 	}
+		// 	return $P;
 			
-		}
+		// }
 
 		function LibrosPorAño(){
 			
@@ -193,5 +208,5 @@
 		function LibrosPorEditorial(){
 			
 		}
-
+	}
 ?>

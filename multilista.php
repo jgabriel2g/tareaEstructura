@@ -71,11 +71,34 @@
 			
 		}
 
-		function verDetallesLibro(){
+		function verDetallesLibro($IdEd,$IdLi){
+			$Mensaje = "";
+			$NL = new NodoLibro();
+			$NL = $NL->BuscarLibro($IdEd,$IdLi);
+			if ($NL == null) {
+				// code...
+				$Mensaje = "Libro no encontrado";
+			} else {
+				// code...
+				$Mensaje = $Mensaje."ID libro: ".$NL->get_idLibro()."<br>"."Titulo: ".$NL->get_titulo()."<br>"."Autor: ".
+				$NL->get_autor()."<br>"."Pais: ".$NL->get_pais()."<br>"."Año: ".$NL->get_ano()."<br>"."Cantidad: ".$NL->get_cantidad();
+			}
+			return $Mensaje;
 			
 		}
 
-		function ActualizarLibro(){
+		function ActualizarInventario($IdEd,$IdLi,$CA){
+			$P = False;
+			$NL = new NodoLibro();
+			$NL = $NL->BuscarLibro($IdEd,$IdLi);
+			if ($NL==null) {
+				// code...
+				$P = False;
+			} else {
+				$NL->get_cantidad() = $NL->get_cantidad() + $CA;
+				$P = true; 
+			}
+			return $P;
 			
 		}
 

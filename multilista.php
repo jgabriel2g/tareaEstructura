@@ -5,69 +5,158 @@
 
 		private $Head;
 		private $Final;
+		private $Abajo;
+		private $LibroFinal;
 
 		function __construct(){
 			$this->Head = null;
 			$this->Final = null;
+			$this->Abajo = null;
+			$this->LibroFinal = null;
 		}
 
-		function AgregarEditorial(%nodoEditorialNew){
-			if($this->Head == null){
-				$this->Head = $nodoEditorialNew;
-			}else{
-				$this->Final->set_Siguiente($nodoEditorialNew);
-				$nodoEditorialNew->set_Anterior($this->Final);
-			}
-			$this->Final = $nodoEditorialNew;
+		function AgregarEditorial($nodoEditorialNew){
+			if ($this->Head == null){
+                $this->Head = $nodoEditorialNew;
+            }else{
+                $this->Final->set_siguiente($nodoEditorialNew);
+                $nodoEditorialNew->set_anterior($this->FINAL);
+            }
+            $this->final = $nodoEditorialNew;
 		}
 
 		function BuscarEditorial($idEditorial){
 			$P = $this->Head;
-			$Encontrado = false;
-			while($P != null && $Encontrado == false){
-				if($P->get_Editorial() == $idEditorial){
-					$Encontrado = true;
-				}else{
-					$P = $P->get_Siguiente();
-				}
-			}
-			return $P;
+            $Encontrado = False;
+            while ($P != null && !$Encontrado){
+                if ($P-> get_Editorial() == $idEditorial){
+                    $Encontrado = true;
+                }else{
+                    $P = $P->get_siguiente();
+                }
+            }
+        	return $P;
+        }
 		}
 
-		function EditorialVacia($nodoEditorialP){
+		function EditorialVacia(){
 			//recorrer la editorial hacia abajo para saber si tiene o no libros
-			if($P->get_Abajo() == null){
+			$Q = $this->Abajo;
+			if($Q == null){
 				return true;
 			}else{
 				return false;
 			}
 		}
 
-		function ApuntarFinalEditorial($P){
-			$R = $P->get_Abajo();
-			while ($R->get_Abajo() != null) {
-				$R = $R->get_Abajo();
+		function ApuntarFinalLibro(){
+			$R = $this->Abajo;
+			while ($R != null) {
+				$this->LibroFinal = $R;
 			}
-			return $R;
+			return $this->LibroFinal;
 		}
 
 		function VisualizarLibrosEditorial(){
 			
 		}
 
-		function EliminarEditorial(){
-			
+		function EliminarEditorial($eliminacion){
+			$Aux = $this->Head;
+        	$Anterior = $Aux;
+        	$Encontrado = false;
+        	$eliminado = false;
+			while ($Aux != null && $Encontrado == false) {
+            if($Aux->get_Editorial() == $eliminacion){
+                $Encontrado = true;
+            }else{
+                $Anterior = $Aux;
+                $Aux = $Aux->getSig();
+            }
+        }
+        if ($Aux == null) {
+            $eliminado = false;
+        }else{
+            if ($Aux==$this->Head) {
+                $this->Head = $this->Head->get_Siguiente();
+                if ($Aux == $this->Final) {
+                    $this->Final=null;
+                }
+            }else{
+                $Anterior->setSig($Aux->get_Siguiente());
+                if ($Aux == $this->Final) {
+                    $this->Final = $Anterior;
+                }
+            }
+            $Aux = null;
+            $eliminado = true;
+        }
 		}
 
-		function AgregarLibro(){
-			
+		function AgregarLibro($Q){
+			if (EditorialVacia()) {
+				$this->Abajo = $Q;
+			}else{
+				ApuntarFinalLibro();
+				$this->LibroFinal->set_abajo($Q);
+			}
+			$this->LibroFinal = $Q;
 		}
 
-		function BuscarLibro(){
-			
+		function BuscarLibro($idLibro,$idEd){
+			$NE = BuscarEditorial($idEd);
+			if ($NE = null) {
+				return "La editorial No exite";
+			}else{
+				$Aux = $this->abajo;
+				$Encontrado = false;
+				while ($Aux != null && $Encontrado == false) {
+					if($Aux->get_idLibro()==$idLibro){
+						$Encontrado = true;
+					}else{
+						$Aux = $Aux->get_abajo();
+					}
+				}
+				return $Aux;
+			}
 		}
 
-		function EliminarLibro(){
+		function EliminarLibro($LibroaEliminar,$idEd){
+			$NE = BuscarEditorial($idEd);
+			if ($NE = null) {
+				return "La editorial No exite";
+			}else{
+				$libros = $this->abajo;
+				$Anterior = $libros;
+				$Encontrado = false;
+				$eliminado = false;
+				while ($libros != null && $Encontrado == false) {
+					if ($libros->get_idLibro() == $LibroaEliminar) {
+						$Encontrado = true;
+					}else{
+						$Anterior = $libros;
+						$libros = $libros->get_abajo();
+					}
+					if ($libros == null) {
+						$eliminado = false;
+					}else{
+						if ($libros ==$this->abajo) {
+							$this->abajo = $this->abajo->get_abajo();
+							if ($libros == $this->LibroFinal;) {
+								$this->LibroFinal = null;
+							}else{
+								$Anterior->set_abaj();
+								if ($libros == $this->LibroFinal;) {
+									$this->LibroFinal = $Anterior;
+								}
+							}
+							$libros = null;
+							$eliminado = true;
+						}
+						return $eliminado;
+					}
+				}
+			}
 			
 		}
 
@@ -76,10 +165,8 @@
 			$NL = new NodoLibro();
 			$NL = $NL->BuscarLibro($IdEd,$IdLi);
 			if ($NL == null) {
-				// code...
 				$Mensaje = "Libro no encontrado";
 			} else {
-				// code...
 				$Mensaje = $Mensaje."ID libro: ".$NL->get_idLibro()."<br>"."Titulo: ".$NL->get_titulo()."<br>"."Autor: ".
 				$NL->get_autor()."<br>"."Pais: ".$NL->get_pais()."<br>"."Año: ".$NL->get_ano()."<br>"."Cantidad: ".$NL->get_cantidad();
 			}
@@ -109,11 +196,6 @@
 		function LibrosPorEditorial(){
 			
 		}
-
-
-
-
 	}
-
 
 ?>

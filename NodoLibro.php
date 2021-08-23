@@ -1,6 +1,6 @@
 <?php
 class NodoLibro{
-    echo "Hola";
+    
     private $idLibro;
     private $titulo;
     private $autor;
@@ -8,6 +8,7 @@ class NodoLibro{
     private $ano;
     private $cantidad;
     private $abajo;
+    
     function __construct($id,$titulo,$autor,$pais,$ano,$cantidad){
         $this->idLibro = $id;
         $this->titulo = $titulo;
@@ -17,9 +18,7 @@ class NodoLibro{
         $this->cantidad = $cantidad;
         $this->abajo = null;
     }
-    function __construct(){
-        
-    }
+
     //id_Libro
     function get_idLibro(){
         return $this->idLibro;

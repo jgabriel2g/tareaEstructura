@@ -1,9 +1,11 @@
 <?php
+class NodoEditorial{
     private $idEditorial;
     private $denominacion;
     private $anterior;
     private $siguiente;
     private $abajo;
+    
     //Contructor de la clase Editorial
     function __construct($idEditorial, $denominacion){
         $this->idEditorial = $idEditorial;
@@ -12,16 +14,13 @@
         $this->siguiente = null;
         $this->abajo = null;
     }
-    //Constructor Vacio para inicilizar la clase
-    function __construct(){
-        
-    }
+    
     //IdEditorial
     function get_Editorial(){
         return $this->idEditorial;
     }
     function set_Editorial($editorial){
-        $this->idEditorial = $editorial
+        $this->idEditorial = $editorial;
     }
     //Denominacion
     function get_denominacion(){
@@ -51,5 +50,6 @@
     function set_Abajo($abajo){
         $this->abajo = $abajo;
     }
+}
         
 ?>

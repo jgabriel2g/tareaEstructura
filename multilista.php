@@ -61,133 +61,133 @@
 			
 		}
 
-		function EliminarEditorial($eliminacion){
-			$Aux = $this->Head;
-        	$Anterior = $Aux;
-        	$Encontrado = false;
-        	$eliminado = false;
-			while ($Aux != null && $Encontrado == false) {
-            if($Aux->get_Editorial() == $eliminacion){
-                $Encontrado = true;
-            }else{
-                $Anterior = $Aux;
-                $Aux = $Aux->getSig();
-            }
-        }
-        if ($Aux == null) {
-            $eliminado = false;
-        }else{
-            if ($Aux==$this->Head) {
-                $this->Head = $this->Head->get_Siguiente();
-                if ($Aux == $this->Final) {
-                    $this->Final=null;
-                }
-            }else{
-                $Anterior->setSig($Aux->get_Siguiente());
-                if ($Aux == $this->Final) {
-                    $this->Final = $Anterior;
-                }
-            }
-            $Aux = null;
-            $eliminado = true;
-        }
-		}
+		// function EliminarEditorial($eliminacion){
+		// 	$Aux = $this->Head;
+        // 	$Anterior = $Aux;
+        // 	$Encontrado = false;
+        // 	$eliminado = false;
+		// 	while ($Aux != null && $Encontrado == false) {
+        //     if($Aux->get_Editorial() == $eliminacion){
+        //         $Encontrado = true;
+        //     }else{
+        //         $Anterior = $Aux;
+        //         $Aux = $Aux->getSig();
+        //     }
+        // }
+        // if ($Aux == null) {
+        //     $eliminado = false;
+        // }else{
+        //     if ($Aux==$this->Head) {
+        //         $this->Head = $this->Head->get_Siguiente();
+        //         if ($Aux == $this->Final) {
+        //             $this->Final=null;
+        //         }
+        //     }else{
+        //         $Anterior->setSig($Aux->get_Siguiente());
+        //         if ($Aux == $this->Final) {
+        //             $this->Final = $Anterior;
+        //         }
+        //     }
+        //     $Aux = null;
+        //     $eliminado = true;
+        // }
+		// }
 
-		function AgregarLibro($Q){
-			if (EditorialVacia()) {
-				$this->Abajo = $Q;
-			}else{
-				ApuntarFinalLibro();
-				$this->LibroFinal->set_abajo($Q);
-			}
-			$this->LibroFinal = $Q;
-		}
+		// function AgregarLibro($Q){
+		// 	if (EditorialVacia()) {
+		// 		$this->Abajo = $Q;
+		// 	}else{
+		// 		ApuntarFinalLibro();
+		// 		$this->LibroFinal->set_abajo($Q);
+		// 	}
+		// 	$this->LibroFinal = $Q;
+		// }
 
-		function BuscarLibro($idLibro,$idEd){
-			$NE = BuscarEditorial($idEd);
-			if ($NE = null) {
-				return "La editorial No exite";
-			}else{
-				$Aux = $this->abajo;
-				$Encontrado = false;
-				while ($Aux != null && $Encontrado == false) {
-					if($Aux->get_idLibro()==$idLibro){
-						$Encontrado = true;
-					}else{
-						$Aux = $Aux->get_abajo();
-					}
-				}
-				return $Aux;
-			}
-		}
+		// function BuscarLibro($idLibro,$idEd){
+		// 	$NE = BuscarEditorial($idEd);
+		// 	if ($NE = null) {
+		// 		return "La editorial No exite";
+		// 	}else{
+		// 		$Aux = $this->abajo;
+		// 		$Encontrado = false;
+		// 		while ($Aux != null && $Encontrado == false) {
+		// 			if($Aux->get_idLibro()==$idLibro){
+		// 				$Encontrado = true;
+		// 			}else{
+		// 				$Aux = $Aux->get_abajo();
+		// 			}
+		// 		}
+		// 		return $Aux;
+		// 	}
+		// }
 
-		function EliminarLibro($LibroaEliminar,$idEd){
-			$NE = BuscarEditorial($idEd);
-			if ($NE = null) {
-				return "La editorial No exite";
-			}else{
-				$libros = $this->abajo;
-				$Anterior = $libros;
-				$Encontrado = false;
-				$eliminado = false;
-				while ($libros != null && $Encontrado == false) {
-					if ($libros->get_idLibro() == $LibroaEliminar) {
-						$Encontrado = true;
-					}else{
-						$Anterior = $libros;
-						$libros = $libros->get_abajo();
-					}
-					if ($libros == null) {
-						$eliminado = false;
-					}else{
-						if ($libros ==$this->abajo) {
-							$this->abajo = $this->abajo->get_abajo();
-							if ($libros == $this->LibroFinal;) {
-								$this->LibroFinal = null;
-							}else{
-								$Anterior->set_abaj();
-								if ($libros == $this->LibroFinal;) {
-									$this->LibroFinal = $Anterior;
-								}
-							}
-							$libros = null;
-							$eliminado = true;
-						}
-						return $eliminado;
-					}
-				}
-			}
+		// function EliminarLibro($LibroaEliminar,$idEd){
+		// 	$NE = BuscarEditorial($idEd);
+		// 	if ($NE = null) {
+		// 		return "La editorial No exite";
+		// 	}else{
+		// 		$libros = $this->abajo;
+		// 		$Anterior = $libros;
+		// 		$Encontrado = false;
+		// 		$eliminado = false;
+		// 		while ($libros != null && $Encontrado == false) {
+		// 			if ($libros->get_idLibro() == $LibroaEliminar) {
+		// 				$Encontrado = true;
+		// 			}else{
+		// 				$Anterior = $libros;
+		// 				$libros = $libros->get_abajo();
+		// 			}
+		// 			if ($libros == null) {
+		// 				$eliminado = false;
+		// 			}else{
+		// 				if ($libros ==$this->abajo) {
+		// 					$this->abajo = $this->abajo->get_abajo();
+		// 					if ($libros == $this->LibroFinal) {
+		// 						$this->LibroFinal = null;
+		// 					}else{
+		// 						$Anterior->set_abaj();
+		// 						if ($libros == $this->LibroFinal) {
+		// 							$this->LibroFinal = $Anterior;
+		// 						}
+		// 					}
+		// 					$libros = null;
+		// 					$eliminado = true;
+		// 				}
+		// 				return $eliminado;
+		// 			}
+		// 		}
+		// 	}
 			
-		}
+		// }
 
-		function verDetallesLibro($IdEd,$IdLi){
-			$Mensaje = "";
-			$NL = new NodoLibro();
-			$NL = $NL->BuscarLibro($IdEd,$IdLi);
-			if ($NL == null) {
-				$Mensaje = "Libro no encontrado";
-			} else {
-				$Mensaje = $Mensaje."ID libro: ".$NL->get_idLibro()."<br>"."Titulo: ".$NL->get_titulo()."<br>"."Autor: ".
-				$NL->get_autor()."<br>"."Pais: ".$NL->get_pais()."<br>"."Año: ".$NL->get_ano()."<br>"."Cantidad: ".$NL->get_cantidad();
-			}
-			return $Mensaje;
+		// function verDetallesLibro($IdEd,$IdLi){
+		// 	$Mensaje = "";
+		// 	$NL = new NodoLibro();
+		// 	$NL = $NL->BuscarLibro($IdEd,$IdLi);
+		// 	if ($NL == null) {
+		// 		$Mensaje = "Libro no encontrado";
+		// 	} else {
+		// 		$Mensaje = $Mensaje."ID libro: ".$NL->get_idLibro()."<br>"."Titulo: ".$NL->get_titulo()."<br>"."Autor: ".
+		// 		$NL->get_autor()."<br>"."Pais: ".$NL->get_pais()."<br>"."Año: ".$NL->get_ano()."<br>"."Cantidad: ".$NL->get_cantidad();
+		// 	}
+		// 	return $Mensaje;
 			
-		}
+		// }
 
-		function ActualizarInventario($IdEd,$IdLi,$CA){
-			$P = False;
-			$NL = new NodoLibro();
-			$NL = $NL->BuscarLibro($IdEd,$IdLi);
-			if ($NL==null) {
-				// code...
-				$P = False;
-			} else {
-				$NL->get_cantidad() = $NL->get_cantidad() + $CA;
-				$P = true; 
-			}
-			return $P;
+		// function ActualizarInventario($IdEd,$IdLi,$CA){
+		// 	$P = False;
+		// 	$NL = new NodoLibro();
+		// 	$NL = $NL->BuscarLibro($IdEd,$IdLi);
+		// 	if ($NL==null) {
+		// 		// code...
+		// 		$P = False;
+		// 	} else {
+		// 		$NL->get_cantidad() = ($NL->get_cantidad() + $CA);
+		// 		$P = true; 
+		// 	}
+		// 	return $P;
 			
-		}
+		// }
 
 		function LibrosPorAño(){
 			
@@ -196,6 +196,5 @@
 		function LibrosPorEditorial(){
 			
 		}
-	}
 
 ?>

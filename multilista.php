@@ -19,8 +19,8 @@
 			if ($this->Head == null){
                 $this->Head = $nodoEditorialNew;
             }else{
-                $this->Final->set_siguiente($nodoEditorialNew);
-                $nodoEditorialNew->set_anterior($this->FINAL);
+                $this->Final->set_Siguiente($nodoEditorialNew);
+                $nodoEditorialNew->set_Anterior($this->Final);
             }
             $this->final = $nodoEditorialNew;
 		}
@@ -28,11 +28,11 @@
 		function BuscarEditorial($idEditorial){
 			$P = $this->Head;
             $Encontrado = False;
-            while ($P != null && !$Encontrado){
+            while ($P != null && $Encontrado == False){
                 if ($P-> get_Editorial() == $idEditorial){
                     $Encontrado = true;
                 }else{
-                    $P = $P->get_siguiente();
+                    $P = $P->get_Siguiente();
                 }
             }
         	return $P;
@@ -166,7 +166,7 @@
 			if ($NL == null) {
 				$Mensaje = "Libro no encontrado";
 			} else {
-				$Mensaje = $Mensaje."ID libro: ".$NL->get_idLibro()."<br>"."Titulo: ".$NL->get_titulo()."<br>"."Autor: ".
+				$Mensaje = "ID libro: ".$NL->get_idLibro()."<br>"."Titulo: ".$NL->get_titulo()."<br>"."Autor: ".
 				$NL->get_autor()."<br>"."Pais: ".$NL->get_pais()."<br>"."Año: ".$NL->get_ano()."<br>"."Cantidad: ".$NL->get_cantidad();
 			}
 			return $Mensaje;

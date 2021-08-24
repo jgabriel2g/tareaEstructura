@@ -113,7 +113,7 @@
         <div class="agergar_libro">
             <?php
                 if (isset($_POST["add_id_lib"])) {
-                    $NL = new NodoLibro($_POST["add_id_lib"],$_POST["add_titulo"],$_POST["add_autor"],$_POST["add_pais"],$_POST["add_ano"],$_POST["add_cantidad"]);
+                    $NL = new NodoLibro($_POST["add_id_lib"],$_POST["add_titulo"],$_POST["add_autor"],$_POST["add_pais"],$_POST["add_ano"],$_POST["add_cantidad"],$_POST["Select_edit"]);
                     $_SESSION["multilista"]->AgregarLibro($NL,$_POST["Select_edit"]);
                 }
             ?>
@@ -125,17 +125,19 @@
             <?php
                 $Mensaje = $_SESSION["multilista"]->mostrarEditorial();
                 echo "$Mensaje";
-            ?>
-        </div>
-    </section>
-    <section class="Libros">
-        <div class="mostrarLibros">
-            <?php
                 $Mensaje = $_SESSION["multilista"]->VisualizarLibrosEditorial();
                 echo "$Mensaje";
             ?>
         </div>
     </section>
+    <!-- <section class="Libros">
+        <div class="mostrarLibros">
+            <?php
+                // $Mensaje = $_SESSION["multilista"]->VisualizarLibrosEditorial();
+                // echo "$Mensaje";
+            ?>
+        </div>
+    </section> -->
 
 </body>
 

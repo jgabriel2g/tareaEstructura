@@ -64,7 +64,6 @@
 			while ($L->get_abajo() != null) {
 				$L = $L->get_abajo();
 			}
-			echo $L->get_titulo();
 			return $L;
 		}
 
@@ -117,18 +116,15 @@
 		}
 
 		function VisualizarLibrosEditorial(){
-			$Corredor = $this->Abajo;
+			$Lib = $this->Abajo;
+			$Edi = $this->Head;
 			$Mensaje = "";
-			if ($this->Abajo = null) {
-				return null;
-			}else{
-				while ($Corredor !=null) {
-					$Mensaje = $Mensaje."--- id: ".$Corredor->get_idLibro()." nombre: ".$Corredor->get_titulo()." Autor: ".$Corredor->get_autor()."<br>";
-					$Corredor = $Corredor->get_abajo();
+				while ($Lib!=null) {
+						$Mensaje = $Mensaje."---ID: ".$Lib->get_idLibro()." Nombre: ".$Lib->get_titulo()." Autor: ".$Lib->get_autor()." Disponible: ".$Lib->get_cantidad()." Editorial: ".$Lib->get_Pertenecea()."<br>";
+						$Lib = $Lib->get_abajo();
+					}
+					return $Mensaje;
 				}
-				return $Mensaje;
-			}
-		}
 
 		function BuscarLibro($idLibro,$idEd){
 			$NE = BuscarEditorial($idEd);

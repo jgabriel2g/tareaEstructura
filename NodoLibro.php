@@ -1,6 +1,6 @@
 <?php
 class NodoLibro{
-    
+    private $pertenecea;
     private $idLibro;
     private $titulo;
     private $autor;
@@ -9,15 +9,23 @@ class NodoLibro{
     private $cantidad;
     private $abajo;
     
-    function __construct($id,$titulo,$autor,$pais,$ano,$cantidad){
+    function __construct($id,$titulo,$autor,$pais,$ano,$cantidad,$pertenecea){
         $this->idLibro = $id;
         $this->titulo = $titulo;
         $this->autor = $autor;
         $this->pais = $pais;
         $this->ano = $ano;
         $this->cantidad = $cantidad;
+        $this->pertenecea = $pertenecea;
     }
 
+    // A que editorial pertenece
+    function get_Pertenecea(){
+        return $this->pertenecea;
+    }
+    function set_Pertenecea($pertenecea){
+        $this->pertenecea = $pertenecea;
+    }
     //id_Libro
     function get_idLibro(){
         return $this->idLibro;

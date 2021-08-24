@@ -6,13 +6,11 @@
 		private $Head;
 		private $Final;
 		private $Abajo;
-		private $LibroFinal;
 
 		function __construct(){
 			$this->Head = null;
 			$this->Final = null;
 			$this->Abajo = null;
-			$this->LibroFinal = null;
 		}
 
 		function AgregarEditorial($nodoEditorialNew){ //✔
@@ -52,24 +50,22 @@
         	return $P;
         }
 
-		function EditorialVacia($P){
-			//recorrer la editorial hacia abajo para saber si tiene o no libros
-			$Q = $this->Abajo;
-			if($Q->get_denominacion() == $P){
-				if($Q->get_abajo_primerLib() == null){
-					return true;
-				}else{
-					return false;
-				}
+		function EditorialVacia($P){//✔
+			$editoral_vc = $this->BuscarEditorial($P);
+			if($editoral_vc->get_abajo_primerLib() == null){
+				return true;
+			}else{
+				return false;
 			}
 		}
 		
-		function ApuntarFinalLibro(){
-			$R = $this->Abajo;
-			while ($R != null) {
-				$this->LibroFinal = $R;
+		function ApuntarFinalLibro($editoral_apuntar){//✔
+			$L = $editoral_apuntar->get_abajo_primerLib();
+			while ($L->get_abajo() != null) {
+				$L = $L->get_abajo();
 			}
-			return $this->LibroFinal;
+			echo $L->get_titulo();
+			return $L;
 		}
 
 
@@ -105,17 +101,18 @@
         }
 		}
 
-		function AgregarLibro($Libro,$editorial){
+		function AgregarLibro($Libro,$editorial){//✔
 			$editoral_add = $this->BuscarEditorial($editorial);
-			if ($editoral_add == $editorial){
-				if ($this->EditorialVacia($editoral_add)) {
+			if ($editoral_add!=null) {
+				if($this->EditorialVacia($editoral_add->get_denominacion())){
 					$this->Abajo = $Libro;
-					$this->Abajo->set_abajo_primerlib($Libro);
-				}else {
-					$this->ApuntarFinalLibro();
-					$this->LibroFinal->set_abajo($Libro);
+					$editoral_add->set_abajo_primerLib($Libro);
+				}else{
+					$LibroFinal =$this->ApuntarFinalLibro($editoral_add);
+					$LibroFinal->set_abajo($Libro);
 				}
-				$this->LibroFinal = $libro;
+			}else{
+				echo "La Editorial donde desea ingresar el libro no exite";
 			}
 		}
 

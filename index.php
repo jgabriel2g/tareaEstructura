@@ -75,11 +75,11 @@
         <div class="Editoral_Vacia">
             <?php
                 if(isset($_POST["ver_vacio"])){
-                    $S = $_SESSION["multilista"]->EditorialVacia($_POST["ver_vaicio"]);
+                    $S = $_SESSION["multilista"]->EditorialVacia($_POST["ver_vacio"]);
                     if ($S) {
-                        echo "Esta Editorial esta vacia";
+                        echo "<hr>Esta Editorial esta vacia";
                     }else{
-                        echo "Editorial con al menos 1 libro";
+                        echo "<hr>La editorial tiene al menos un libro";
                     }
                 }
             ?>

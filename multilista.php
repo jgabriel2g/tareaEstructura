@@ -190,38 +190,73 @@
 			
 		}
 
-		// function verDetallesLibro($IdEd,$IdLi){
-		// 	$Mensaje = "";
-		// 	$NL = BuscarLibro($IdEd,$IdLi);
-		// 	if ($NL == null) {
-		// 		$Mensaje = "Libro no encontrado";
-		// 	} else {
-		// 		$Mensaje = "ID libro: ".$NL->get_idLibro()."<br>"."Titulo: ".$NL->get_titulo()."<br>"."Autor: ".
-		// 		$NL->get_autor()."<br>"."Pais: ".$NL->get_pais()."<br>"."Año: ".$NL->get_ano()."<br>"."Cantidad: ".$NL->get_cantidad();
-		// 	}
-		// 	return $Mensaje;
-			
-		// }
-
-		// function ActualizarInventario($IdEd,$IdLi,$CA){
-		// 	$P = False;
-		// 	$NL = BuscarLibro($IdEd,$IdLi);
-		// 	if ($NL==null) {
-		// 		$P = False;
-		// 	} else {
-		// 		$NL->get_cantidad() = $NL->get_cantidad() + $CA;
-		// 		$P = true; 
-		// 	}
-		// 	return $P;
-			
-		// }
-
-		function LibrosPorAño(){
-			
+		function verDetallesLibro($IdEd,$IdLi){
+			$Mensaje = "";
+			$NL = $this->BuscarLibro($IdLi,$IdEd);
+			if ($NL == null) {
+				$Mensaje = "Libro no encontrado";
+			} else {
+				$Mensaje = "ID libro: ".$NL->get_idLibro()."<br>"."Titulo: ".$NL->get_titulo()."<br>"."Autor: ".
+		 		$NL->get_autor()."<br>"."Pais: ".$NL->get_pais()."<br>"."Año: ".$NL->get_ano()."<br>"."Cantidad: ".$NL->get_cantidad();
+		 	}
+		 	return $Mensaje;
+				
 		}
 
-		function LibrosPorEditorial(){
-			
+		function ActualizarInventario($IdEd,$IdLi,$CA){
+			$NL = $this->BuscarLibro($IdLi, $IdEd);
+			if($NL == null){
+				return false;
+			}else{
+				$NL->set_cantidad($NL->get_cantidad() + $CA);
+				return true;
+			}			
+		}
+
+		function LibrosPorAño($Ano){
+			$Cont = 0;
+			$Aux = $this->Head;
+			$Aux2 = $Aux;
+			//buscar libros con el año
+			//recorrer editoriales
+			while($Aux != null){
+				while($Aux2 != null){					
+					if($Aux2->get_ano() == $Ano){
+						$Cont = $Cont + 1;
+						$Aux2 = $Aux2->get_abajo();
+					}else{
+						$Aux2 = $Aux2->get_abajo();
+					}
+				}
+				$Aux = $Aux->getSig();
+			}
+			return "Hay ".$Cont." Libros del año ".$Ano;
+		}
+
+		function LibrosPorEditorial($denominacion){
+			$Con = 0;
+			$Aux = $this->Head;
+			//buscar editorial
+			if($Aux == null){
+				return "Lista de editoriales vacia";
+			}else{
+				while($Aux != null){
+					if($Aux->get_denominacion() == $denominacion){
+						$Aux2 = $Aux;
+						if($this->EditorialVacia($denominacion)){
+							return "Editorial vacia";
+						}else{
+							while($Aux2 != null){
+								$Cont = $Cont + 1;
+								$Aux2 = $Aux2->get_abajo();
+							}
+							return "La editorial ".$denominacion." tiene ".$Cont." libros";
+						}
+					}else{
+						return "Editorial no encontrada";
+					}
+				}
+			}
 		}
 	}
 ?>

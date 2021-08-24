@@ -119,7 +119,6 @@ function mostrarEditorial(){
 ```
 
 Su funcion es Mostrar en la interfaz Los Nodos Agregados:
-[![Nodos Editoriales](https://i.ibb.co/TqThsGg/Ejem1.png "Nodos Editoriales")](https://i.ibb.co/TqThsGg/Ejem1.png "Nodos Editoriales")
 
 ###### PASOS
 

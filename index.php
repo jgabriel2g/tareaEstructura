@@ -120,8 +120,8 @@
         </div>
     </section>
     <hr>
-    <section class="Editoriales">
-        <div class="mostrar_Editorial">
+    <section class="Mostrar">
+        <div class="Mostrar">
             <?php
                 $Mensaje = $_SESSION["multilista"]->mostrarEditorial();
                 echo "$Mensaje";
@@ -130,15 +130,6 @@
             ?>
         </div>
     </section>
-    <!-- <section class="Libros">
-        <div class="mostrarLibros">
-            <?php
-                // $Mensaje = $_SESSION["multilista"]->VisualizarLibrosEditorial();
-                // echo "$Mensaje";
-            ?>
-        </div>
-    </section> -->
-
 </body>
 
 </html>

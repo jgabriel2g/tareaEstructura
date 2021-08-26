@@ -14,6 +14,7 @@
 		function AgregarEditorial($nodoEditorialNew){ //✔
 			if ($this->Head == null){
                 $this->Head = $nodoEditorialNew;
+				$this->Final = $nodoEditorialNew;
             }else{
                 $this->Final->set_Siguiente($nodoEditorialNew);
                 $nodoEditorialNew->set_Anterior($this->Final);
@@ -21,25 +22,6 @@
             $this->Final = $nodoEditorialNew;
 		}
 		
-		function mostrarEditorial(){ //✔
-		$NE = $this->Head;
-        if ($this->Head == null) {
-            return "No se encuentrar Registradas Editoriales";
-        } else {
-            while ($NE != null) {
-                echo "ID : ".$NE->get_idEditorial()." Editorial : ".$NE->get_denominacion()."<br>";
-                if ($NE->get_abajo_primerLib() != null) {
-                    $A = $NE-> get_abajo_primerLib();
-                    echo "--ID : ".$A->get_idLibro()." Titulo : ".$A-> get_titulo()." Editorial : ".$A->get_Pertenecea()."<br>";
-                    while ($A->get_abajo() != null) {
-                       echo "--ID : ".$A->get_idLibro()." Titulo : ".$A-> get_titulo()." Editorial : ".$A->get_Pertenecea()."<br>";
-                        $A = $A->get_abajo();
-                    }
-                }
-                $NE = $NE->get_Siguiente();
-            }
-        }
-	}
 
 		function BuscarEditorial($denominacion){ //✔
 			$P = $this->Head;
@@ -56,7 +38,7 @@
 
 		function EditorialVacia($P){//✔
 			$editoral_vc = $this->BuscarEditorial($P);
-			if($editoral_vc->get_abajo_primerLib() == null){
+			if($editoral_vc->get_abajo() == null){
 				return true;
 			}else{
 				return false;
@@ -64,7 +46,7 @@
 		}
 		
 		function ApuntarFinalLibro($editoral_apuntar){//✔
-			$L = $editoral_apuntar->get_abajo_primerLib();
+			$L = $editoral_apuntar->get_abajo();
 			while ($L->get_abajo() != null) {
 				$L = $L->get_abajo();
 			}
@@ -106,7 +88,7 @@
 			$editoral_add = $this->BuscarEditorial($editorial);
 			if ($editoral_add!=null) {
 				if($this->EditorialVacia($editoral_add->get_denominacion())){
-					$editoral_add->set_abajo_primerLib($Libro);
+					$editoral_add->set_abajo($Libro);
 				}else{
 					$LibroFinal =$this->ApuntarFinalLibro($editoral_add);
 					$LibroFinal->set_abajo($Libro);
@@ -115,6 +97,26 @@
 				echo "La Editorial donde desea ingresar el libro no exite";
 			}
 		}
+		
+		function mostrarEditorial(){ //✔
+		$NE = $this->Head;
+		$Menasaje = "";
+		if ($this->Head == null) {
+			echo "La lista esta vacia";
+		}else{
+			while($NE != null){
+				$Menasaje = $Menasaje."*Id: ".$NE->get_idEditorial()." Nombre: ".$NE->get_denominacion()."<br>";
+				$Lib = $NE->get_abajo();
+				while ($Lib != null) {
+					$Menasaje = $Menasaje."--ID Libro: ".$Lib->get_idLibro()." Nombre: ".$Lib->get_titulo()." Cantidad: ".$Lib->get_cantidad()." Editorial: ".$Lib->get_Pertenecea()."<br>"; 
+					$Lib = $Lib->get_abajo();
+				}
+				$NE = $NE->get_siguiente();
+			}
+			$Menasaje = $Menasaje;
+		}
+		return $Menasaje;
+	}
 
 		function BuscarLibro($idEd,$idLibro){
 			$NE = $this->BuscarEditorial($idEd);
@@ -177,7 +179,7 @@
 			if($P == null){
 				return false;
 			}else{
-				$Libro = $P->get_abajo_primerLib();
+				$Libro = $P->get_abajo();
 				$Ant = $Libro;
 				$Encontrado = false;
 				while($Libro != null && $Encontrado == false){
@@ -229,7 +231,7 @@
 			$Cont = 0;
 			$Aux = $this->Head;
 			while($Aux != null){
-				$Aux2 = $Aux->get_abajo_primerLib();
+				$Aux2 = $Aux->get_abajo();
 				while($Aux2 != null){					
 					if($Aux2->get_ano() == $Ano){
 						$Cont = $Cont + 1;	
@@ -247,8 +249,8 @@
 			//buscar editorial
 			while($Aux != null){
 				if($Aux->get_denominacion() == $denominacion){
-					if($Aux->get_abajo_primerLib() != null){
-						$abajo = $Aux->get_abajo_primerLib();
+					if($Aux->get_abajo() != null){
+						$abajo = $Aux->get_abajo();
 						while ($abajo != NULL) {
 							$Con++;
 							$abajo = $abajo->get_abajo();

@@ -92,7 +92,7 @@
                 <input type="submit" value="eliminar" class="boton">
             </form>
         </div>
-        
+
         <div class="eliminando_editorial">
             <?php
                 if(isset($_POST["eliminar_editorial"])){
@@ -101,7 +101,6 @@
                 }
             ?>
         </div>
-        
 
     </section>
     <hr>
@@ -185,29 +184,13 @@
 
     </section>
     <hr>
-    <section class="Mostrar">
-        <div class="Mostrar">
-            <?php
-                $Mensaje = $_SESSION["multilista"]->mostrarEditorial();
-                echo "$Mensaje";
-            ?>
-        </div>
-    </section>
-    <!-- <section class="Libros">
-        <div class="mostrarLibros">
-            <?php
-                // $Mensaje = $_SESSION["multilista"]->VisualizarLibrosEditorial();
-                // echo "$Mensaje";
-            ?>
-        </div>
-    </section> -->
-<hr>
+    <hr>
     <section>
         <form action="" method="POST">
-                <label>Ingrese el año por el cual quiere ver la cantidad de libros</label>
-                <input type="number" name="año" required>
-                <input type="submit" name="FiltrarAño" value="ver">
-                <?php
+            <label>Ingrese el año por el cual quiere ver la cantidad de libros</label>
+            <input type="number" name="año" required>
+            <input type="submit" name="FiltrarAño" value="ver">
+            <?php
                     if (isset($_POST["FiltrarAño"])){
                         $año = $_REQUEST['año'];
                         $cantidad = $_SESSION['multilista']->LibrosPorAño($año);
@@ -221,13 +204,13 @@
         </form>
     </section>
 
-<hr>
+    <hr>
     <section>
         <form action="" method="POST">
-                <label>Ingrese el nombre de la editorial por el cual quiere ver sus libros</label>
-                <input type="text" name="editorial" required>
-                <input type="submit" name="FiltrarEditorial" value="ver">
-                <?php
+            <label>Ingrese el nombre de la editorial por el cual quiere ver sus libros</label>
+            <input type="text" name="editorial" required>
+            <input type="submit" name="FiltrarEditorial" value="ver">
+            <?php
                     if (isset($_POST["FiltrarEditorial"])){
                         $editorial = $_REQUEST['editorial'];
                         $cantidad = $_SESSION['multilista']->LibrosPorEditorial($editorial);
@@ -239,6 +222,15 @@
                     }
                 ?>
         </form>
+    </section>
+
+    <section class="Mostrar">
+        <div class="Mostrar">
+            <?php
+                $Mensaje = $_SESSION["multilista"]->mostrarEditorial();
+                echo "$Mensaje";
+            ?>
+        </div>
     </section>
 
 </body>

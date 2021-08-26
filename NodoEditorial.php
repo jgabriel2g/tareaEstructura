@@ -4,7 +4,7 @@ class NodoEditorial{
     private $denominacion;
     private $anterior;
     private $siguiente;
-    private $abajo_primerLib;
+    private $abajo;
     
     //Contructor de la clase Editorial
     function __construct($idEditorial, $denominacion){
@@ -12,7 +12,7 @@ class NodoEditorial{
         $this->denominacion = $denominacion;
         $this->anterior = null;
         $this->siguiente = null;
-        $this->abajo_primerLib = null;
+        $this->abajo = null;
     }
     
     //IdEditorial
@@ -43,12 +43,12 @@ class NodoEditorial{
     function set_Anterior($Anterior){
         $this->anterior = $Anterior;
     }
-    // abajo_primerLib
-    function get_abajo_primerLib(){
-        return $this->abajo_primerLib;
+    // abajo
+    function get_abajo(){
+        return $this->abajo;
     }
-    function set_abajo_primerLib($abajo_primerLib){
-        $this->abajo_primerLib = $abajo_primerLib;
+    function set_abajo($abajo_primerLib){
+        $this->abajo = $abajo_primerLib;
     }
 }
         

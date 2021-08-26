@@ -41,11 +41,11 @@
         }
 	}
 
-		function BuscarEditorial($idEditorial){ //✔
+		function BuscarEditorial($denominacion){ //✔
 			$P = $this->Head;
             $Encontrado = False;
             while ($P != null && $Encontrado == False){
-                if ($P->get_denominacion() == $idEditorial){
+                if ($P->get_denominacion() == $denominacion){
                     $Encontrado = true;
                 }else{
                     $P = $P->get_Siguiente();
@@ -72,36 +72,34 @@
 		}
 
 
-		function EliminarEditorial($eliminacion){
-			$Aux = $this->Head;
-        	$Anterior = $Aux;
-        	$Encontrado = false;
-        	$eliminado = false;
-			while ($Aux != null && $Encontrado == false) {
-            if($Aux->get_Editorial() == $eliminacion){
-                $Encontrado = true;
-            }else{
-                $Anterior = $Aux;
-                $Aux = $Aux->getSig();
-            }
-        }
-        if ($Aux == null) {
-            $eliminado = false;
-        }else{
-            if ($Aux==$this->Head) {
-                $this->Head = $this->Head->get_Siguiente();
-                if ($Aux == $this->Final) {
-                    $this->Final=null;
-                }
-            }else{
-                $Anterior->setSig($Aux->get_Siguiente());
-                if ($Aux == $this->Final) {
-                    $this->Final = $Anterior;
-                }
-            }
-            $Aux = null;
-            $eliminado = true;
-        }
+		function EliminarEditorial($IdEd){ // no da error pero no se borra de lista
+			$P = $this->BuscarEditorial($IdEd);
+			if($P == null){
+				return false;
+			}else{
+				if(!$this->EditorialVacia($P)){
+					return false;
+				}else{
+					if($P == $this->Head){
+						if($P->get_Siguiente() == null){
+							$this->Head = null;
+							$this->Final = null;
+						}else{
+							$this->Head = $this->get_Siguiente();
+							$this->Head->set_Anterior(null);
+						}
+					}else{
+						$P = $P->get_Siguiente();
+						if($P == $this->Final){
+							$Final = $P->get_Anterior();
+						}else{
+							$P = $P->get_Anterior();
+						}
+					}
+					$P = null;
+					return true;
+				}
+			}
 		}
 
 		function AgregarLibro($Libro,$editorial){//✔
@@ -123,7 +121,7 @@
 			if ($NE == null) {
 				return "La editorial No exite";
 			}else{
-				$Aux = $this->abajo;
+				$Aux = $NE->get_abajo();
 				$Encontrado = false;
 				while ($Aux != null && $Encontrado == false) {
 					if($Aux->get_idLibro()==$idLibro){
@@ -136,7 +134,7 @@
 			}
 		}
 
-		function EliminarLibro($LibroaEliminar,$idEd){
+		/*function EliminarLibro($LibroaEliminar,$idEd){
 			$NE = BuscarEditorial($idEd);
 			if ($NE = null) {
 				return "La editorial No exite";
@@ -172,8 +170,38 @@
 					}
 				}
 			}
-			
+		}*/
+
+		function EliminarLibro($idLib,$idEd){
+			$P = $this->BuscarEditorial($idEd);
+			if($P == null){
+				return false;
+			}else{
+				$Libro = $P->get_abajo_primerLib();
+				$Ant = $Libro;
+				$Encontrado = false;
+				while($Libro != null && $Encontrado == false){
+					if($Libro->get_idLibro() == $idLib){
+						$Encontrado = true;
+					}else{
+						$Ant = $Libro;
+						$Libro = $Libro->get_abajo();
+					}
+				}
+				if($Libro == null){
+					return false;
+				}else{
+					if($Libro == $P->get_abajo()){
+						$P = $Libro->get_abajo();
+					}else{
+						$Ant = $Libro->get_abajo();
+					}
+					$Libro = null;
+					return true;
+				}
+			}
 		}
+
 
 		function verDetallesLibro($IdEd,$IdLi){
 			$Mensaje = "";
@@ -184,8 +212,7 @@
 				$Mensaje = "ID libro: ".$NL->get_idLibro()."<br>"."Titulo: ".$NL->get_titulo()."<br>"."Autor: ".
 		 		$NL->get_autor()."<br>"."Pais: ".$NL->get_pais()."<br>"."Año: ".$NL->get_ano()."<br>"."Cantidad: ".$NL->get_cantidad();
 		 	}
-		 	return $Mensaje;
-				
+		 	return $Mensaje;		
 		}
 
 		function ActualizarInventario($IdEd,$IdLi,$CA){
@@ -198,50 +225,48 @@
 			}			
 		}
 
-		function LibrosPorAño($Ano){
+		function LibrosPorAño($Ano){ //Funciona no se como pero funciona
 			$Cont = 0;
 			$Aux = $this->Head;
-			$Aux2 = $Aux;
-			//buscar libros con el año
-			//recorrer editoriales
 			while($Aux != null){
+				$Aux2 = $Aux->get_abajo_primerLib();
 				while($Aux2 != null){					
 					if($Aux2->get_ano() == $Ano){
-						$Cont = $Cont + 1;
-						$Aux2 = $Aux2->get_abajo();
-					}else{
-						$Aux2 = $Aux2->get_abajo();
+						$Cont = $Cont + 1;	
 					}
+					$Aux2 = $Aux2->get_abajo();
 				}
-				$Aux = $Aux->getSig();
+				$Aux = $Aux->get_Siguiente();
 			}
-			return "Hay ".$Cont." Libros del año ".$Ano;
+			return $Cont;
 		}
 
-		function LibrosPorEditorial($denominacion){
+		function LibrosPorEditorial($denominacion){  //Funciona no se como pero funciona
 			$Con = 0;
 			$Aux = $this->Head;
 			//buscar editorial
-			if($Aux == null){
-				return "Lista de editoriales vacia";
-			}else{
-				while($Aux != null){
-					if($Aux->get_denominacion() == $denominacion){
-						$Aux2 = $Aux;
-						if($this->EditorialVacia($denominacion)){
-							return "Editorial vacia";
-						}else{
-							while($Aux2 != null){
-								$Cont = $Cont + 1;
-								$Aux2 = $Aux2->get_abajo();
-							}
-							return "La editorial ".$denominacion." tiene ".$Cont." libros";
+			while($Aux != null){
+				if($Aux->get_denominacion() == $denominacion){
+					if($Aux->get_abajo_primerLib() != null){
+						$abajo = $Aux->get_abajo_primerLib();
+						while ($abajo != NULL) {
+							$Con++;
+							$abajo = $abajo->get_abajo();
 						}
-					}else{
-						return "Editorial no encontrada";
 					}
 				}
+				$Aux = $Aux->get_Siguiente();
 			}
+			return $Con;
 		}
+
+		function ApuntarFinalEditorial($NodoEditorialP){
+			$R = $NodoEditorialP->get_abajo();
+			while($R->get_abajo() != null){
+				$R = $R->get_abajo();
+			}
+			return $R;
+		}
+
 	}
 ?>

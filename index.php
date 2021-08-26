@@ -1,7 +1,7 @@
 <?php
     include("multilista.php");
     session_start();
-    if(isset($_SESSION["multilista"]) == false){
+    if(!isset($_SESSION["multilista"])){
         $_SESSION["multilista"] = new multilista;
         echo'<script> alert("Se estan implemtentando Cookies"); </script>';
     }
@@ -16,7 +16,7 @@
     <style>
     body {
         color: white;
-        background-color: black;
+        background-color: #58D68D;
         font-size: 30px
     }
     </style>
@@ -84,6 +84,25 @@
                 }
             ?>
         </div>
+        <!--Eliminar editorial-->
+        <div class="Eliminar_editorial">
+            <form action="index.php" method="post">
+                <span>Ingrese Id del editorial a eliminar</span>
+                <input type="text" name="eliminar_editorial" class="texto">
+                <input type="submit" value="eliminar" class="boton">
+            </form>
+        </div>
+        
+        <div class="eliminando_editorial">
+            <?php
+                if(isset($_POST["eliminar_editorial"])){
+                    $H = $_SESSION["multilista"]->EliminarEditorial($_POST["eliminar_editorial"]);
+                    echo "Editorial eliminada";
+                }
+            ?>
+        </div>
+        
+
     </section>
     <hr>
     <!-- NO FUNCIONA EL AGREGAR Y MOSTRAR LIRBO -->
@@ -104,7 +123,7 @@
                 <input type="text" name="add_ano" class="texto">
                 <span>Cantidad</span>
                 <input type="text" name="add_cantidad" class="texto">
-                <span>A que liberia lo desea Agregar</span>
+                <span>A que libreria lo desea Agregar</span>
                 <input type="text" name="Select_edit" class="texto">
                 <input type="submit" value="Agregar Libro" class="boton">
             </form>
@@ -141,6 +160,29 @@
                 }
             ?>
         </div>
+        <!--Eliminar libro-->
+        <div class="eliminar_libr">
+            <hr>
+            <form action="index.php" method="post">
+                <span>Eliminar libro</span>
+                <span>Id Editorial</span>
+                <input type="text" name="eliminar_id_edi" class="texto">
+                <span>Id Libro</span>
+                <input type="text" name="eliminar_id_lib" class="texto">
+                <input type="submit" value="Eliminar Libro" class="boton">
+            </form>
+
+        </div>
+        <div class="eliminar_libro">
+            <?php
+                if (isset($_POST["eliminar_id_edi"])) {
+                    //$NL = new NodoEditorial($_POST["eliminar_id_edi"],$_POST["eliminar_id_lib"]);
+                    $_SESSION["multilista"]->EliminarLibro($_POST["eliminar_id_lib"],$_POST["eliminar_id_edi"]);
+                    echo "Libro eliminado";
+                }
+            ?>
+        </div>
+
     </section>
     <hr>
     <section class="Mostrar">
@@ -151,6 +193,54 @@
             ?>
         </div>
     </section>
+    <!-- <section class="Libros">
+        <div class="mostrarLibros">
+            <?php
+                // $Mensaje = $_SESSION["multilista"]->VisualizarLibrosEditorial();
+                // echo "$Mensaje";
+            ?>
+        </div>
+    </section> -->
+<hr>
+    <section>
+        <form action="" method="POST">
+                <label>Ingrese el año por el cual quiere ver la cantidad de libros</label>
+                <input type="number" name="año" required>
+                <input type="submit" name="FiltrarAño" value="ver">
+                <?php
+                    if (isset($_POST["FiltrarAño"])){
+                        $año = $_REQUEST['año'];
+                        $cantidad = $_SESSION['multilista']->LibrosPorAño($año);
+                        if ($cantidad > 0) {
+                            echo("<p>La cantidad de libros publicados en el año $año es $cantidad</p>");    
+                        } else {
+                             echo("<p>No hay ningún libro publicado en el año $año</p>");
+                        }
+                    }
+                ?>
+        </form>
+    </section>
+
+<hr>
+    <section>
+        <form action="" method="POST">
+                <label>Ingrese el nombre de la editorial por el cual quiere ver sus libros</label>
+                <input type="text" name="editorial" required>
+                <input type="submit" name="FiltrarEditorial" value="ver">
+                <?php
+                    if (isset($_POST["FiltrarEditorial"])){
+                        $editorial = $_REQUEST['editorial'];
+                        $cantidad = $_SESSION['multilista']->LibrosPorEditorial($editorial);
+                        if ($cantidad > 0) {
+                            echo("<p>La cantidad de libros publicados en la editorial $editorial es $cantidad</p>");
+                        } else {
+                            echo("<p>No hay ningún libro publicado en la editorial $editorial</p>");
+                        }
+                    }
+                ?>
+        </form>
+    </section>
+
 </body>
 
 </html>

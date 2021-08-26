@@ -126,9 +126,9 @@
 					return $Mensaje;
 				}
 
-		function BuscarLibro($idLibro,$idEd){
-			$NE = BuscarEditorial($idEd);
-			if ($NE = null) {
+		function BuscarLibro($idEd,$idLibro){
+			$NE = $this->BuscarEditorial($idEd);
+			if ($NE == null) {
 				return "La editorial No exite";
 			}else{
 				$Aux = $this->abajo;

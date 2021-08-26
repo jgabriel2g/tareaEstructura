@@ -118,6 +118,28 @@
                 }
             ?>
         </div>
+        <div class="Libro_a_buscar">
+            <form action="index.php" method="post">
+                <span>Buscar Libro: </span>
+                <span>Ingrese el ID del libro:</span>
+                <input type="text" name="Buscar_libro" class="texto">
+                <span>Ingrese el ID del editorial:</span>
+                <input type="text" name="encontrar_editorial" class="texto">
+                <input type="submit" value="Buscar Nodo" class="boton">
+            </form>
+        </div>
+        <div class="busqueda_libro">
+            <?php
+                if(isset($_POST["Buscar_libro"])){
+                    $Z = $_SESSION["multilista"]->BuscarLibro($_POST["Buscar_libro"], $_POST["encontrar_editorial"]);
+                    if ($Z != null) {
+                        echo "<br> El elemento encontrado es: ".$Z->get_titulo()." Con Id: ".$Z->get_idLibro()."<hr>";
+                    }else{
+                        echo "<br> El elemento No fue Encontrado"."<hr>";
+                    }
+                }
+            ?>
+        </div>
     </section>
     <hr>
     <section class="Mostrar">

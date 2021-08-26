@@ -5,12 +5,10 @@
 
 		private $Head;
 		private $Final;
-		private $Abajo;
 
 		function __construct(){
 			$this->Head = null;
 			$this->Final = null;
-			$this->Abajo = null;
 		}
 
 		function AgregarEditorial($nodoEditorialNew){ //✔
@@ -24,18 +22,24 @@
 		}
 		
 		function mostrarEditorial(){ //✔
-			$Corredor = $this->Head;
-			$Mensaje = "";
-			if ($this->Head == null) {
-				return null;
-			}else{
-				while ($Corredor !=null) {
-					$Mensaje = $Mensaje."*Id : ".$Corredor->get_idEditorial()." Nombre : ".$Corredor->get_denominacion()."<br>";
-					$Corredor = $Corredor->get_Siguiente();
-				}
-			}
-			return "La lista es: <br> $Mensaje";
-		}
+		$NE = $this->Head;
+        if ($this->Head == null) {
+            return "No se encuentrar Registradas Editoriales";
+        } else {
+            while ($NE != null) {
+                echo "ID : ".$NE->get_idEditorial()." Editorial : ".$NE->get_denominacion()."<br>";
+                if ($NE->get_abajo_primerLib() != null) {
+                    $A = $NE-> get_abajo_primerLib();
+                    echo "--ID : ".$A->get_idLibro()." Titulo : ".$A-> get_titulo()." Editorial : ".$A->get_Pertenecea()."<br>";
+                    while ($A->get_abajo() != null) {
+                       echo "--ID : ".$A->get_idLibro()." Titulo : ".$A-> get_titulo()." Editorial : ".$A->get_Pertenecea()."<br>";
+                        $A = $A->get_abajo();
+                    }
+                }
+                $NE = $NE->get_Siguiente();
+            }
+        }
+	}
 
 		function BuscarEditorial($idEditorial){ //✔
 			$P = $this->Head;
@@ -104,7 +108,6 @@
 			$editoral_add = $this->BuscarEditorial($editorial);
 			if ($editoral_add!=null) {
 				if($this->EditorialVacia($editoral_add->get_denominacion())){
-					$this->Abajo = $Libro;
 					$editoral_add->set_abajo_primerLib($Libro);
 				}else{
 					$LibroFinal =$this->ApuntarFinalLibro($editoral_add);
@@ -114,17 +117,6 @@
 				echo "La Editorial donde desea ingresar el libro no exite";
 			}
 		}
-
-		function VisualizarLibrosEditorial(){
-			$Lib = $this->Abajo;
-			$Edi = $this->Head;
-			$Mensaje = "";
-				while ($Lib!=null) {
-						$Mensaje = $Mensaje."---ID: ".$Lib->get_idLibro()." Nombre: ".$Lib->get_titulo()." Autor: ".$Lib->get_autor()." Disponible: ".$Lib->get_cantidad()." Editorial: ".$Lib->get_Pertenecea()."<br>";
-						$Lib = $Lib->get_abajo();
-					}
-					return $Mensaje;
-				}
 
 		function BuscarLibro($idEd,$idLibro){
 			$NE = $this->BuscarEditorial($idEd);

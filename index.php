@@ -118,6 +118,7 @@
                 }
             ?>
         </div>
+        <hr>
         <div class="Libro_a_buscar">
             <form action="index.php" method="post">
                 <span>Buscar Libro: </span>
@@ -146,8 +147,6 @@
         <div class="Mostrar">
             <?php
                 $Mensaje = $_SESSION["multilista"]->mostrarEditorial();
-                echo "$Mensaje";
-                $Mensaje = $_SESSION["multilista"]->VisualizarLibrosEditorial();
                 echo "$Mensaje";
             ?>
         </div>

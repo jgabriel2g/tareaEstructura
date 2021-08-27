@@ -59,7 +59,7 @@
 			if($P == null){
 				return false;
 			}else{
-				if(!$this->EditorialVacia($P)){
+				if($this->EditorialVacia($P)){
 					return false;
 				}else{
 					if($P == $this->Head){

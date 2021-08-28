@@ -142,7 +142,7 @@
                 <span>Buscar Libro: </span>
                 <span>Ingrese el ID del libro:</span>
                 <input type="text" name="Buscar_libro" class="texto">
-                <span>Ingrese el ID del editorial:</span>
+                <span>, Ingrese el nombre del editorial:</span>
                 <input type="text" name="encontrar_editorial" class="texto">
                 <input type="submit" value="Buscar Nodo" class="boton">
             </form>
@@ -150,9 +150,32 @@
         <div class="busqueda_libro">
             <?php
                 if(isset($_POST["Buscar_libro"])){
-                    $Z = $_SESSION["multilista"]->BuscarLibro($_POST["Buscar_libro"], $_POST["encontrar_editorial"]);
+                    $Z = $_SESSION["multilista"]->BuscarLibro($_POST["encontrar_editorial"], $_POST["Buscar_libro"]);
                     if ($Z != null) {
-                        echo "<br> El elemento encontrado es: ".$Z->get_titulo()." Con Id: ".$Z->get_idLibro()."<hr>";
+                        echo "<br> El elemento encontrado es: ".$Z->get_titulo()."; Con Id: ".$Z->get_idLibro()."<hr>";
+                    }else{
+                        echo "<br> El elemento No fue Encontrado"."<hr>";
+                    }
+                }
+            ?>
+        </div>
+        <hr>
+        <div class="Ver detalles">
+            <form action="index.php" method="post">
+                <span>Ver detalles libro: </span>
+                <span>Ingrese el ID del libro:</span>
+                <input type="text" name="hallar_libro" class="texto">
+                <span>, Ingrese el nombre del editorial:</span>
+                <input type="text" name="hallar_editorial" class="texto">
+                <input type="submit" value="Buscar nodo" class="boton">
+            </form>
+        </div>
+        <div class="ver_detalles">
+            <?php
+                if(isset($_POST["hallar_libro"])){
+                    $Z = $_SESSION["multilista"]->verDetallesLibro($_POST["hallar_editorial"], $_POST["hallar_libro"]);
+                    if ($Z != null) {
+                        echo "<br> El elemento encontrado es: ".$Z."<hr>";
                     }else{
                         echo "<br> El elemento No fue Encontrado"."<hr>";
                     }

@@ -54,6 +54,7 @@
 		}
 
 
+
 		function EliminarEditorial($IdEd){ // no da error pero no se borra de lista
 			$P = $this->BuscarEditorial($IdEd);
 			if($P == null){
@@ -207,11 +208,11 @@
 
 		function verDetallesLibro($IdEd,$IdLi){
 			$Mensaje = "";
-			$NL = $this->BuscarLibro($IdLi,$IdEd);
+			$NL = $this->BuscarLibro($IdEd,$IdLi);
 			if ($NL == null) {
 				$Mensaje = "Libro no encontrado";
 			} else {
-				$Mensaje = "ID libro: ".$NL->get_idLibro()."<br>"."Titulo: ".$NL->get_titulo()."<br>"."Autor: ".
+				$Mensaje = "<br>"."ID libro: ".$NL->get_idLibro()."<br>"."Titulo: ".$NL->get_titulo()."<br>"."Autor: ".
 		 		$NL->get_autor()."<br>"."Pais: ".$NL->get_pais()."<br>"."Año: ".$NL->get_ano()."<br>"."Cantidad: ".$NL->get_cantidad();
 		 	}
 		 	return $Mensaje;		
@@ -262,13 +263,7 @@
 			return $Con;
 		}
 
-		function ApuntarFinalEditorial($NodoEditorialP){
-			$R = $NodoEditorialP->get_abajo();
-			while($R->get_abajo() != null){
-				$R = $R->get_abajo();
-			}
-			return $R;
-		}
+		
 
 	}
 ?>

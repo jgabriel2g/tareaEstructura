@@ -319,4 +319,5 @@ function LibrosPorEditorial($denominacion){
 
 El funcionamiento es el mismo que por año, su función es mostrar por pantalla cuantos libros se encuentran registrados en una editorial, esto lo hace mediante el estudio de le editorial ingresada por un usuario una vez está ingresada, empieza a realizar el recorrido hacia abajo y a cada libro que lee a `$Cont` Se le asigna un valor más.
 
-written by [Cmrales26](https://github.com/Cmrales26)✌
+Create By [Cmrales26](https://github.com/Cmrales26)✌,[jgabriel2g](https://github.com/jgabriel2g),[Ydelator](https://github.com/Ydelator)
+README written by [Cmrales26](https://github.com/Cmrales26)✌

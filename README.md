@@ -49,17 +49,17 @@ Para manipular los nodos usamos 3 Variables.
 > 3. Abajo el cual nos señara cual es el nodo (libro) que va debajo de cada editorial.
 
 ```php
-	class multilista{
+class multilista{
 
-		private $Head;
-		private $Final;
-		private $Abajo;
+private $Head;
+private $Final;
+private $Abajo;
 
-		function __construct(){
-			$this->Head = null;
-			$this->Final = null;
-			$this->Abajo = null;
-		}
+function __construct(){
+$this->Head = null;
+$this->Final = null;
+$this->Abajo = null;
+}
 ```
 
 ## METODOS
@@ -81,11 +81,11 @@ Para manipular los nodos usamos 3 Variables.
 
 ```php
 function AgregarEditorial($nodoEditorialNew){
-			if ($this->Head == null){
-                $this->Head = $nodoEditorialNew;
-            }else{
-                $this->Final->set_Siguiente($nodoEditorialNew);
-                $nodoEditorialNew->set_Anterior($this->Final);
+	if ($this->Head == null){
+		$this->Head = $nodoEditorialNew;
+	}else{
+		$this->Final->set_Siguiente($nodoEditorialNew);
+		$nodoEditorialNew->set_Anterior($this->Final);
             }
             $this->Final = $nodoEditorialNew;
 		}
@@ -103,9 +103,9 @@ Agregar editorial recibe un nodo por parámetro este nodo será ingresado poster
 #### Buscar Editorial
 
 ```php
-function BuscarEditorial($denominacion){ //✔
-			$P = $this->Head;
-            $Encontrado = False;
+function BuscarEditorial($denominacion){
+	$P = $this->Head;
+        $Encontrado = False;
             while ($P != null && $Encontrado == False){
                 if ($P->get_denominacion() == $denominacion){
                     $Encontrado = true;
@@ -113,7 +113,7 @@ function BuscarEditorial($denominacion){ //✔
                     $P = $P->get_Siguiente();
                 }
             }
-        	return $P;
+        return $P;
         }
 ```
 
@@ -133,7 +133,7 @@ function EditorialVacia($P){
 			if($editoral_vc->get_abajo() == null){
 				return true;
 			}else{
-				return false;
+			return false;
 			}
 		}
 
@@ -306,7 +306,7 @@ function LibrosPorEditorial($denominacion){
 					if($Aux->get_abajo() != null){
 						$abajo = $Aux->get_abajo();
 						while ($abajo != NULL) {
-							$Con++;
+						 	$Con++;
 							$abajo = $abajo->get_abajo();
 						}
 					}
@@ -318,7 +318,5 @@ function LibrosPorEditorial($denominacion){
 ```
 
 El funcionamiento es el mismo que por año, su función es mostrar por pantalla cuantos libros se encuentran registrados en una editorial, esto lo hace mediante el estudio de le editorial ingresada por un usuario una vez está ingresada, empieza a realizar el recorrido hacia abajo y a cada libro que lee a `$Cont` Se le asigna un valor más.
-
-[========]
 
 written by [Cmrales26](http://https://github.com/Cmrales26 "Cmrales26")✌

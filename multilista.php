@@ -102,10 +102,10 @@
 				echo "La lista esta vacia";
 			}else{
 				while($NE != null){
-					$Menasaje = $Menasaje."*ID: ".$NE->get_idEditorial()." | Nombre: ".$NE->get_denominacion()."<br>";
+					$Menasaje = $Menasaje."ID: ".$NE->get_idEditorial()." | Nombre: ".$NE->get_denominacion()."<br>";
 					$Lib = $NE->get_abajo();
 					while ($Lib != null) {
-						$Menasaje = $Menasaje."--ID Libro: ".$Lib->get_idLibro()." Nombre: ".$Lib->get_titulo()." Cantidad: ".$Lib->get_cantidad()." Editorial: ".$Lib->get_Pertenecea()."<br>"; 
+						$Menasaje = $Menasaje."ID Libro: ".$Lib->get_idLibro()." Nombre: ".$Lib->get_titulo()." Cantidad: ".$Lib->get_cantidad()." Editorial: ".$Lib->get_Pertenecea()."<br>"; 
 						$Lib = $Lib->get_abajo();
 					}
 					$NE = $NE->get_siguiente();
@@ -182,6 +182,7 @@
 				return false;
 			}else{
 				$NL->set_cantidad($NL->get_cantidad() + $CA);
+				$this->mostrarEditorial();
 				return true;
 			}			
 		}

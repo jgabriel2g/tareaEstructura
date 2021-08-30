@@ -3,7 +3,10 @@
     session_start();
     if(!isset($_SESSION["multilista"])){
         $_SESSION["multilista"] = new multilista;
-        echo'<script> alert("Se estan implemtentando Cookies"); </script>';
+        echo'<script> alert("INTEGRANTES: Nelson Morales - Jesus Garcia - Yan De La Torre");
+        alert("Se estan implementando Cookies");        
+        </script>';
+        
     }
 ?>
 <!DOCTYPE html>
@@ -98,7 +101,7 @@
     </section>
     
     <section class="Formulario de libros">
-        <h4>Agergar Libro</h4>
+        <h4>Agregar Libro</h4>
         <div class="registrar_libr">
             <form action="index.php" method="post">
                 <span>Id Libro</span>
@@ -154,28 +157,26 @@
             ?>
             <br>
         </div>
-
         <div class="Eliminar_editorial">
             <h4>Eliminar Editorial</h4>
             <form action="index.php" method="post">
-                <span>Ingrese Id del editorial a eliminar</span>
+                <span>Ingrese el nombre de la editorial a eliminar</span>
                 <input type="text" name="eliminar_editorial" class="texto">
                 <input type="submit" value="eliminar editorial" class="boton">
             </form>
-        </div>
-
-        <div class="eliminando_editorial">
-            <?php
-                if(isset($_POST["eliminar_editorial"])){
-                    $H = $_SESSION["multilista"]->EliminarEditorial($_POST["eliminar_editorial"]);
-                }
-            ?>
         </div>
     </section>
     </div>
 </div>
     <div class="Columnas">
         <div class="Columna_2">
+            <div class="eliminando_editorial">
+            <?php
+                if(isset($_POST["eliminar_editorial"])){
+                    $_SESSION["multilista"]->EliminarEditorial($_POST["eliminar_editorial"]);
+                }
+            ?>
+        </div>
         <div class="Agregado_de_libros">
             <?php
                 if (isset($_POST["Actualizar_inventario"])){
@@ -183,6 +184,8 @@
                 }
             ?>
         </div>
+        
+        
             <h1>Biblioteca</h1>
             <section class="Mostrar_section">
                 <div class="Mostrar">
@@ -190,7 +193,7 @@
                     $Mensaje = $_SESSION["multilista"]->mostrarEditorial();
                     echo "$Mensaje";
                     ?>
-                    </div>
+                </div>
             </section>
             <div class="Libro_a_buscar">
             <br><hr>

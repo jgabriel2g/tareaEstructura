@@ -68,6 +68,7 @@
                     }
                 }else{ 
                     if($Editorial === $this->Final){
+						$this->Final->get_Anterior()->set_Siguiente(NULL);
                         $this->Final = $Editorial->get_Anterior();
                     }else{
                         $Auxiliar = $Editorial->get_Anterior();
@@ -78,8 +79,6 @@
                 return true;
             }
         }
-
-
 
 		function AgregarLibro($Libro,$editorial){//✔
 			$editoral_add = $this->BuscarEditorial($editorial);

@@ -58,18 +58,18 @@
             if($Editorial == NULL){
                 return false;
             }else{
-                if ($Editorial === $this->Head) {//si la editorial esta de primera
-                    if($Editorial->get_Siguiente() == NULL){//si no hay mas editoriales despues
+                if ($Editorial === $this->Head) {
+                    if($Editorial->get_Siguiente() == NULL){
                         $this->Head = NULL;
                         $this->Final = NULL;
-                    }else{//Si hay mas editoriales despues
+                    }else{
                         $this->Head = $this->Head->get_Siguiente();
                         $this->Head->set_Anterior(NULL);
                     }
                 }else{ 
-                    if($Editorial === $this->Final){ //si la editorial estaen el final
+                    if($Editorial === $this->Final){
                         $this->Final = $Editorial->get_Anterior();
-                    }else{ // eliminar la editorial si no esta en final ni en inicio
+                    }else{
                         $Auxiliar = $Editorial->get_Anterior();
                         $Auxiliar->set_Siguiente($Editorial->get_Siguiente());
                     }
@@ -102,7 +102,7 @@
 				echo "La lista esta vacia";
 			}else{
 				while($NE != null){
-					$Menasaje = $Menasaje."*Id: ".$NE->get_idEditorial()." Nombre: ".$NE->get_denominacion()."<br>";
+					$Menasaje = $Menasaje."*ID: ".$NE->get_idEditorial()." | Nombre: ".$NE->get_denominacion()."<br>";
 					$Lib = $NE->get_abajo();
 					while ($Lib != null) {
 						$Menasaje = $Menasaje."--ID Libro: ".$Lib->get_idLibro()." Nombre: ".$Lib->get_titulo()." Cantidad: ".$Lib->get_cantidad()." Editorial: ".$Lib->get_Pertenecea()."<br>"; 
@@ -170,9 +170,9 @@
 				$Mensaje = "Libro no encontrado";
 			} else {
 				$Mensaje = "<br>"."ID libro: ".$NL->get_idLibro()."<br>"."Titulo: ".$NL->get_titulo()."<br>"."Autor: ".
-		 		$NL->get_autor()."<br>"."Pais: ".$NL->get_pais()."<br>"."Año: ".$NL->get_ano()."<br>"."Cantidad: ".$NL->get_cantidad();
-		 	}
-		 	return $Mensaje;		
+		$NL->get_autor()."<br>"."Pais: ".$NL->get_pais()."<br>"."Año: ".$NL->get_ano()."<br>"."Cantidad: ".$NL->get_cantidad();
+		}
+		return $Mensaje;		
 		}
 
 		function ActualizarInventario($nombreEditorial,$IdLi,$CA){
@@ -220,8 +220,5 @@
 			}
 			return $Con;
 		}
-
-		
-
 	}
 ?>

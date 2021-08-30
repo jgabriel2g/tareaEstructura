@@ -53,37 +53,33 @@
 			return $L;
 		}
 
+		function EliminarEditorial($NombreEditorial){
+            $Editorial = $this->BuscarEditorial($NombreEditorial);
+            if($Editorial == NULL){
+                return false;
+            }else{
+                if ($Editorial === $this->Head) {//si la editorial esta de primera
+                    if($Editorial->get_Siguiente() == NULL){//si no hay mas editoriales despues
+                        $this->Head = NULL;
+                        $this->Final = NULL;
+                    }else{//Si hay mas editoriales despues
+                        $this->Head = $this->Head->get_Siguiente();
+                        $this->Head->set_Anterior(NULL);
+                    }
+                }else{ 
+                    if($Editorial === $this->Final){ //si la editorial estaen el final
+                        $this->Final = $Editorial->get_Anterior();
+                    }else{ // eliminar la editorial si no esta en final ni en inicio
+                        $Auxiliar = $Editorial->get_Anterior();
+                        $Auxiliar->set_Siguiente($Editorial->get_Siguiente());
+                    }
+                }
+                $Editorial = NULL;
+                return true;
+            }
+        }
 
 
-		function EliminarEditorial($IdEd){ // no da error pero no se borra de lista
-			$P = $this->BuscarEditorial($IdEd);
-			if($P == null){
-				return false;
-			}else{
-				if($this->EditorialVacia($P)){
-					return false;
-				}else{
-					if($P == $this->Head){
-						if($P->get_Siguiente() == null){
-							$this->Head = null;
-							$this->Final = null;
-						}else{
-							$this->Head = $this->get_Siguiente();
-							$this->Head->set_Anterior(null);
-						}
-					}else{
-						$P = $P->get_Siguiente();
-						if($P == $this->Final){
-							$Final = $P->get_Anterior();
-						}else{
-							$P = $P->get_Anterior();
-						}
-					}
-					$P = null;
-					return true;
-				}
-			}
-		}
 
 		function AgregarLibro($Libro,$editorial){//✔
 			$editoral_add = $this->BuscarEditorial($editorial);
@@ -100,24 +96,24 @@
 		}
 		
 		function mostrarEditorial(){ //✔
-		$NE = $this->Head;
-		$Menasaje = "";
-		if ($this->Head == null) {
-			echo "La lista esta vacia";
-		}else{
-			while($NE != null){
-				$Menasaje = $Menasaje."*Id: ".$NE->get_idEditorial()." Nombre: ".$NE->get_denominacion()."<br>";
-				$Lib = $NE->get_abajo();
-				while ($Lib != null) {
-					$Menasaje = $Menasaje."--ID Libro: ".$Lib->get_idLibro()." Nombre: ".$Lib->get_titulo()." Cantidad: ".$Lib->get_cantidad()." Editorial: ".$Lib->get_Pertenecea()."<br>"; 
-					$Lib = $Lib->get_abajo();
+			$NE = $this->Head;
+			$Menasaje = "";
+			if ($this->Head == null) {
+				echo "La lista esta vacia";
+			}else{
+				while($NE != null){
+					$Menasaje = $Menasaje."*Id: ".$NE->get_idEditorial()." Nombre: ".$NE->get_denominacion()."<br>";
+					$Lib = $NE->get_abajo();
+					while ($Lib != null) {
+						$Menasaje = $Menasaje."--ID Libro: ".$Lib->get_idLibro()." Nombre: ".$Lib->get_titulo()." Cantidad: ".$Lib->get_cantidad()." Editorial: ".$Lib->get_Pertenecea()."<br>"; 
+						$Lib = $Lib->get_abajo();
+					}
+					$NE = $NE->get_siguiente();
 				}
-				$NE = $NE->get_siguiente();
+				$Menasaje = $Menasaje;
 			}
-			$Menasaje = $Menasaje;
+			return $Menasaje;
 		}
-		return $Menasaje;
-	}
 
 		function BuscarLibro($idEd,$idLibro){
 			$NE = $this->BuscarEditorial($idEd);
@@ -137,74 +133,28 @@
 			}
 		}
 
-		/*function EliminarLibro($LibroaEliminar,$idEd){
-			$NE = BuscarEditorial($idEd);
-			if ($NE = null) {
-				return "La editorial No exite";
-			}else{
-				$libros = $this->abajo;
-				$Anterior = $libros;
-				$Encontrado = false;
-				$eliminado = false;
-				while ($libros != null && $Encontrado == false) {
-					if ($libros->get_idLibro() == $LibroaEliminar) {
-						$Encontrado = true;
-					}else{
-						$Anterior = $libros;
-						$libros = $libros->get_abajo();
-					}
-					if ($libros == null) {
-						$eliminado = false;
-					}else{
-						if ($libros ==$this->abajo) {
-							$this->abajo = $this->abajo->get_abajo();
-							if ($libros == $this->LibroFinal) {
-								$this->LibroFinal = null;
-							}else{
-								$Anterior->set_abaj();
-								if ($libros == $this->LibroFinal) {
-									$this->LibroFinal = $Anterior;
-								}
-							}
-							$libros = null;
-							$eliminado = true;
-						}
-						return $eliminado;
-					}
-				}
-			}
-		}*/
-
-		function EliminarLibro($idLib,$idEd){
-			$P = $this->BuscarEditorial($idEd);
-			if($P == null){
-				return false;
-			}else{
-				$Libro = $P->get_abajo();
-				$Ant = $Libro;
-				$Encontrado = false;
-				while($Libro != null && $Encontrado == false){
-					if($Libro->get_idLibro() == $idLib){
-						$Encontrado = true;
-					}else{
-						$Ant = $Libro;
-						$Libro = $Libro->get_abajo();
-					}
-				}
-				if($Libro == null){
-					return false;
-				}else{
-					if($Libro == $P->get_abajo()){
-						$P = $Libro->get_abajo();
-					}else{
-						$Ant = $Libro->get_abajo();
-					}
-					$Libro = null;
-					return true;
-				}
-			}
-		}
-
+		function EliminarLibro($IdEditorial, $IdLibro, $NombreEditorial){
+            $Editorial = $this->BuscarEditorial($NombreEditorial);
+            if($this->BuscarLibro($IdLibro, $IdEditorial) != NULL){
+                if($Editorial->get_abajo() != NULL){
+                    $Libro = $Editorial->get_abajo();
+                    if($Libro->get_abajo() == NULL){
+                        $Editorial->set_abajo(NULL);
+                        $Libro = NULL;
+                    }else{
+                        while($Libro->get_abajo()->get_idLibro() != $IdLibro){
+                            $Libro = $Libro->get_abajo();
+                        }
+                        $Libro->set_abajo($Libro->get_abajo()->get_abajo());
+                    }
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            } 
+        }
 
 		function verDetallesLibro($IdEd,$IdLi){
 			$Mensaje = "";

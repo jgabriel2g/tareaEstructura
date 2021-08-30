@@ -256,6 +256,10 @@
         </div>
     </section>
 
+<p>Grupo - integrantes:
+Jesus Garcia - Nelson Morales - Yan de la torre
+</p>
+
 </body>
 
 </html>

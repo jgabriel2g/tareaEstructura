@@ -178,7 +178,7 @@
         <div class="Columna_2">
         <div class="Agregado_de_libros">
             <?php
-                if (isset($_POST["nuevo_valor"])){
+                if (isset($_POST["Actualizar_inventario"])){
                     $_SESSION["multilista"]->ActualizarInventario($_POST["nombre_editorial"],$_POST["id_Libro"],$_POST["nuevo_valor"]);
                 }
             ?>
@@ -298,7 +298,7 @@
                 <br><br>
                 <span>Agregar/Retirar del inventario</span>
                 <input type="number" name="nuevo_valor" placeholder="Positivo agregar/Negativo retirar">
-                <input type="submit" value="Actualizar" onclick="location.reload()"/>
+                <input type="submit" name="Actualizar_inventario" value="Actualizar" onclick="location.reload()"/>
             </form>
         </div>
         </div>

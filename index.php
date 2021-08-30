@@ -19,6 +19,10 @@
         background-color: #58D68D;
         font-size: 30px
     }
+
+    h4 {
+        color: red;
+    }
     </style>
     <title>Multilistas Biblioteca</title>
 </head>
@@ -30,6 +34,7 @@
     <hr>
     <section class="Formulario de Editorial">
         <div class="agregare_ditorial">
+            <h4>Agregar Editorial</h4>
             <form action="index.php" method="post">
                 <span>Agregar id Editorial</span>
                 <input type="text" name="Agregar_id_Editorial" class="texto">
@@ -47,6 +52,7 @@
             ?>
         </div>
         <div class="Editorial_a_buscar">
+            <h4>Buscar Editorial</h4>
             <form action="index.php" method="post">
                 <span>Buscar Editorial</span>
                 <input type="text" name="Buscar_editorial" class="texto">
@@ -66,6 +72,7 @@
             ?>
         </div>
         <div class="verificar_vacio">
+            <h4>Verificar Vacio</h4>
             <form action="index.php" method="post">
                 <span>Verificar Si la editorial Esta Vacia</span>
                 <input type="text" name="ver_vacio" class="texto">
@@ -84,27 +91,9 @@
                 }
             ?>
         </div>
-        <!--Eliminar editorial-->
-        <div class="Eliminar_editorial">
-            <form action="index.php" method="post">
-                <span>Ingrese Id del editorial a eliminar</span>
-                <input type="text" name="eliminar_editorial" class="texto">
-                <input type="submit" value="eliminar" class="boton">
-            </form>
-        </div>
-
-        <div class="eliminando_editorial">
-            <?php
-                if(isset($_POST["eliminar_editorial"])){
-                    $H = $_SESSION["multilista"]->EliminarEditorial($_POST["eliminar_editorial"]);
-                    echo "Editorial eliminada";
-                }
-            ?>
-        </div>
-
     </section>
     <hr>
-    <!-- NO FUNCIONA EL AGREGAR Y MOSTRAR LIRBO -->
+
     <section class="Formulario de libros">
         <h4>Agergar Libro</h4>
         <div class="registrar_libr">
@@ -138,8 +127,8 @@
         </div>
         <hr>
         <div class="Libro_a_buscar">
+            <h4>Buscar Libro</h4>
             <form action="index.php" method="post">
-                <span>Buscar Libro: </span>
                 <span>Ingrese el ID del libro:</span>
                 <input type="text" name="Buscar_libro" class="texto">
                 <span>, Ingrese el nombre del editorial:</span>
@@ -152,7 +141,7 @@
                 if(isset($_POST["Buscar_libro"])){
                     $Z = $_SESSION["multilista"]->BuscarLibro($_POST["encontrar_editorial"], $_POST["Buscar_libro"]);
                     if ($Z != null) {
-                        echo "<br> El elemento encontrado es: ".$Z->get_titulo()."; Con Id: ".$Z->get_idLibro()."<hr>";
+                        echo "<br> El elemento encontrado es: ".$Z->get_titulo()."; Con Id: ".$Z->get_idLibro().", Cantidad:".$Z->get_cantidad()."<hr>";
                     }else{
                         echo "<br> El elemento No fue Encontrado"."<hr>";
                     }
@@ -161,6 +150,7 @@
         </div>
         <hr>
         <div class="Ver detalles">
+            <h4>Ver detalles</h4>
             <form action="index.php" method="post">
                 <span>Ver detalles libro: </span>
                 <span>Ingrese el ID del libro:</span>
@@ -185,12 +175,12 @@
         <!--Eliminar libro-->
         <div class="eliminar_libr">
             <hr>
+            <h4>Eliminar Libro</h4>
             <form action="index.php" method="post">
-                <span>Eliminar libro</span>
-                <span>Id Editorial</span>
-                <input type="text" name="eliminar_id_edi" class="texto">
                 <span>Id Libro</span>
                 <input type="text" name="eliminar_id_lib" class="texto">
+                <span>Nombre Editorial</span>
+                <input type="text" name="eliminar_id_edi" class="texto">
                 <input type="submit" value="Eliminar Libro" class="boton">
             </form>
 
@@ -198,22 +188,34 @@
         <div class="eliminar_libro">
             <?php
                 if (isset($_POST["eliminar_id_edi"])) {
-                    //$NL = new NodoEditorial($_POST["eliminar_id_edi"],$_POST["eliminar_id_lib"]);
                     $_SESSION["multilista"]->EliminarLibro($_POST["eliminar_id_lib"],$_POST["eliminar_id_edi"]);
-                    echo "Libro eliminado";
                 }
             ?>
         </div>
 
-    </section>
-    <hr>
-    <hr>
-    <section>
-        <form action="" method="POST">
-            <label>Ingrese el año por el cual quiere ver la cantidad de libros</label>
-            <input type="number" name="año" required>
-            <input type="submit" name="FiltrarAño" value="ver">
+        <div class="Eliminar_editorial">
+            <h4>Eliminar Editorial</h4>
+            <form action="index.php" method="post">
+                <span>Ingrese Id del editorial a eliminar</span>
+                <input type="text" name="eliminar_editorial" class="texto">
+                <input type="submit" value="eliminar" class="boton">
+            </form>
+        </div>
+
+        <div class="eliminando_editorial">
             <?php
+                if(isset($_POST["eliminar_editorial"])){
+                    $H = $_SESSION["multilista"]->EliminarEditorial($_POST["eliminar_editorial"]);
+                }
+            ?>
+        </div>
+        <hr>
+        <div class="Buscar_Libros_por_año">
+            <form action="index.php" method="POST">
+                <label>Ingrese el año por el cual quiere ver la cantidad de libros</label>
+                <input type="number" name="año" required>
+                <input type="submit" name="FiltrarAño" value="ver">
+                <?php
                     if (isset($_POST["FiltrarAño"])){
                         $año = $_REQUEST['año'];
                         $cantidad = $_SESSION['multilista']->LibrosPorAño($año);
@@ -224,16 +226,15 @@
                         }
                     }
                 ?>
-        </form>
-    </section>
-
-    <hr>
-    <section>
-        <form action="" method="POST">
-            <label>Ingrese el nombre de la editorial por el cual quiere ver sus libros</label>
-            <input type="text" name="editorial" required>
-            <input type="submit" name="FiltrarEditorial" value="ver">
-            <?php
+            </form>
+        </div>
+        <hr>
+        <div class="Buscar_libros_por_editorial">
+            <form action="index.php" method="POST">
+                <label>Ingrese el nombre de la editorial por el cual quiere ver sus libros</label>
+                <input type="text" name="editorial" required>
+                <input type="submit" name="FiltrarEditorial" value="ver">
+                <?php
                     if (isset($_POST["FiltrarEditorial"])){
                         $editorial = $_REQUEST['editorial'];
                         $cantidad = $_SESSION['multilista']->LibrosPorEditorial($editorial);
@@ -244,9 +245,30 @@
                         }
                     }
                 ?>
-        </form>
-    </section>
+            </form>
+        </div>
 
+        <div class="Actualizar_Inventario">
+            <h4>Actualizar Inventario</h4>
+            <form action="index.php" method="post">
+                <span>Id del Libro</span>
+                <input type="text" name="id_Libro">
+                <span>Nombre Editorial</span>
+                <input type="text" name="nombre_editorial">
+                <span>Agregar/Retirar del inventario</span>
+                <input type="text" name="nuevo_valor" placeholder="Mayor add, menor retirar">
+                <input type="submit" value="Actualizar">
+            </form>
+        </div>
+        <div class="Agregado_de_libros">
+            <?php
+                if (isset($_POST["id_Libro"])){
+                    $_SESSION["multilista"]->ActualizarInventario($_POST["nombre_editorial"],$_POST["id_Libro"],$_POST["nuevo_valor"]);
+                }
+            ?>
+        </div>
+    </section>
+    <hr>
     <section class="Mostrar">
         <div class="Mostrar">
             <?php
@@ -256,9 +278,11 @@
         </div>
     </section>
 
-<p>Grupo - integrantes:
-Jesus Garcia - Nelson Morales - Yan de la torre
-</p>
+    <footer>
+        <p>Grupo - integrantes:
+            Jesus Garcia - Nelson Morales - Yan de la torre</p>
+    </footer>
+    </p>
 
 </body>
 

@@ -115,8 +115,8 @@
 			return $Menasaje;
 		}
 
-		function BuscarLibro($idEd,$idLibro){
-			$NE = $this->BuscarEditorial($idEd);
+		function BuscarLibro($nombreEditorial,$idLibro){
+			$NE = $this->BuscarEditorial($nombreEditorial);
 			if ($NE == null) {
 				return "La editorial No exite";
 			}else{
@@ -133,32 +133,39 @@
 			}
 		}
 
-		function EliminarLibro($IdEditorial, $IdLibro, $NombreEditorial){
-            $Editorial = $this->BuscarEditorial($NombreEditorial);
-            if($this->BuscarLibro($IdLibro, $IdEditorial) != NULL){
-                if($Editorial->get_abajo() != NULL){
-                    $Libro = $Editorial->get_abajo();
-                    if($Libro->get_abajo() == NULL){
-                        $Editorial->set_abajo(NULL);
-                        $Libro = NULL;
-                    }else{
-                        while($Libro->get_abajo()->get_idLibro() != $IdLibro){
-                            $Libro = $Libro->get_abajo();
-                        }
-                        $Libro->set_abajo($Libro->get_abajo()->get_abajo());
-                    }
-                    return true;
-                }else{
-                    return false;
+		public function EliminarLibro($IdLibro, $NombreEditorial){
+        $P = $this->BuscarEditorial($NombreEditorial);
+        if ($P == null) {
+            return false;
+        } else {
+            $Q = $P->get_abajo();
+            $Ant = $Q;
+            $Encontrado = false;
+            while ($Q != null && $Encontrado == false) {
+                if ($Q->get_idLibro() == $IdLibro) {
+                    $Encontrado = true;
+                } else {
+                    $Ant = $Q;
+                    $Q = $Q->get_abajo();
                 }
-            }else{
+            }
+            if ($Q == null) {
                 return false;
-            } 
+            } else {
+                if ($Q === $P->get_abajo()) {
+                    $P->set_abajo($Q->get_abajo());
+                } else {
+                    $Ant->set_abajo($Q->get_abajo());
+                }
+                $Q = null;
+                return true;
+            }
         }
+    }
 
-		function verDetallesLibro($IdEd,$IdLi){
+		function verDetallesLibro($nombreEditorial,$IdLi){
 			$Mensaje = "";
-			$NL = $this->BuscarLibro($IdEd,$IdLi);
+			$NL = $this->BuscarLibro($nombreEditorial,$IdLi);
 			if ($NL == null) {
 				$Mensaje = "Libro no encontrado";
 			} else {
@@ -168,8 +175,9 @@
 		 	return $Mensaje;		
 		}
 
-		function ActualizarInventario($IdEd,$IdLi,$CA){
-			$NL = $this->BuscarLibro($IdLi, $IdEd);
+		function ActualizarInventario($nombreEditorial,$IdLi,$CA){
+			$NL = $this->BuscarLibro($nombreEditorial,$IdLi);
+			$NL->get_titulo();
 			if($NL == null){
 				return false;
 			}else{

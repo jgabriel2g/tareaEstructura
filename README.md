@@ -154,7 +154,38 @@ Si Encuentra que abajo es `Null` Retornará `true` dando a entender que se encue
 
 **Apuntar libro final**, Su función es, como su nombre lo indica, apuntar al último libro de una editorial, esto lo hace mediante el recorrido de abajo, pero esta vez del apuntador de libro, el recorrido se realizará hasta que encuentre un valor Null, apenas lo encuentre dejará de hacer el recorrido y tomará el valor del ultimo valor estudiando, una vez recibido lo retorna.
 
-~~Espacio reservado para el método eliminar editorial~~
+#### Eliminar Editorial
+```php
+function EliminarEditorial($NombreEditorial){
+            $Editorial = $this->BuscarEditorial($NombreEditorial);
+            if($Editorial == NULL){
+                return false;
+            }else{
+                if ($Editorial === $this->Head) {
+                    if($Editorial->get_Siguiente() == NULL){
+                        $this->Head = NULL;
+                        $this->Final = NULL;
+                    }else{
+                        $this->Head = $this->Head->get_Siguiente();
+                        $this->Head->set_Anterior(NULL);
+                    }
+                }else{ 
+                    if($Editorial === $this->Final){
+                        $this->Final = $Editorial->get_Anterior();
+                    }else{
+                        $Auxiliar = $Editorial->get_Anterior();
+                        $Auxiliar->set_Siguiente($Editorial->get_Siguiente());
+                    }
+                }
+                $Editorial = NULL;
+                return true;
+            }
+        }
+```
+Su función es eliminar una editorial entera, incluyendo los libros que se encuentran almacenados en ella, esto lo hace mediante el recorrido de la editorial.
+
+En caso de que la editorial ingresada sea la principal se realizara la primera condición, en otro caso se realizará la segunda.
+
 
 #### Agregar Libro
 
@@ -247,7 +278,40 @@ Su función es buscar un libro he imprimir este mismo con la id, esto lo hace me
 > Funciona de igual forma que el método `BuscarEditorial().`
 
 Realiza un recorrido de `Abajo` y una vez encuentre el libro retorna sus valores.
-~~Espacio reservado para Eliminar Libro~~
+
+#### Eliminar Libro
+```php
+public function EliminarLibro($IdLibro, $NombreEditorial){
+        $P = $this->BuscarEditorial($NombreEditorial);
+        if ($P == null) {
+            return false;
+        } else {
+            $Q = $P->get_abajo();
+            $Ant = $Q;
+            $Encontrado = false;
+            while ($Q != null && $Encontrado == false) {
+                if ($Q->get_idLibro() == $IdLibro) {
+                    $Encontrado = true;
+                } else {
+                    $Ant = $Q;
+                    $Q = $Q->get_abajo();
+                }
+            }
+            if ($Q == null) {
+                return false;
+            } else {
+                if ($Q === $P->get_abajo()) {
+                    $P->set_abajo($Q->get_abajo());
+                } else {
+                    $Ant->set_abajo($Q->get_abajo());
+                }
+                $Q = null;
+                return true;
+            }
+        }
+    }
+```
+Su función es eliminar el libro de una editorial específica, esto lo hace recibiendo por parámetros el libro que desea eliminar seguido de la editorial a la que pertenece, una vez obtenido se realiza el recorrido para encontrar el respectivo libro en la editorial y una vez encontrado se eliminara tomando su lugar el que estaba después de él y en caso de que el siguiente sea nulo por su lugar se asignara valor `Null`
 
 #### Ver detalles del libro
 
@@ -269,7 +333,21 @@ function verDetallesLibro($IdEd,$IdLi){
 
 Su función es mostrar cada detalle del libro esto lo hace obteniendo el libro que quiere estudiar mediante el método `BuscarLibro()` que fue previamente analizado.
 
-~~Espacio reservado para actualizar inventario~~
+#### Actualizar Inventario
+```php
+function ActualizarInventario($nombreEditorial,$IdLi,$CA){
+			$NL = $this->BuscarLibro($nombreEditorial,$IdLi);
+			$NL->get_titulo();
+			if($NL == null){
+				return false;
+			}else{
+				$NL->set_cantidad($NL->get_cantidad() + $CA);
+				return true;
+			}
+		}
+```
+Su función es actualizar el inventario de un libro en específico en una librería específica, esto lo hace recibiendo por parámetro la cantidad que se desea agregar al libro, el cual fue previamente asignado por el usuario, una vez obtenido se toma la cantidad inicial y se le suma lo nuevo
+> En caso de ser un número mayor se suma, si es un número negativo este se restará.
 
 #### Libros por año
 
